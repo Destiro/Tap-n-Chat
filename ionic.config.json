@@ -1,0 +1,7 @@
+{
+  "name": "Tap'n'Chat",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
