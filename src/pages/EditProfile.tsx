@@ -1,25 +1,20 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
-import '../styles/Profile.css';
+import '../styles/EditProfile.css';
 
 const EditProfile: React.FC = () => {
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Profile</IonTitle>
+                    <IonTitle>Editing User Profile</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonHeader collapse="condense">
-                    <IonToolbar>
-                        <IonTitle size="large">Tab 3</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
-                <ExploreContainer name="Profile" />
+                <ExploreContainer name="EditProfile" />
             </IonContent>
         </IonPage>
     );
 };
 
-export default Profile;
+export default EditProfile;
