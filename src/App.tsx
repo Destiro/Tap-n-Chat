@@ -1,13 +1,13 @@
 import React from "react";
 import { Redirect, Route } from 'react-router-dom';
 import {
-  IonApp,
-  IonIcon,
-  IonLabel,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
+    IonApp,
+    IonIcon,
+    IonLabel,
+    IonRouterOutlet,
+    IonTabBar,
+    IonTabButton,
+    IonTabs,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { list, person, chatboxEllipses } from 'ionicons/icons';
@@ -36,49 +36,51 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import {log} from "util";
+import Messaging from "./pages/Messaging";
 
 const App: React.FC = () => (
     <IonApp>
-      <IonReactRouter>
-        <IonRouterOutlet>
-          <Route path="/login" component={Login}/>
-          <Route path="/signup" component={Signup}/>
-          <Route path="/tabs" render={() => (
-              <IonTabs>
-                <IonRouterOutlet>
-                  <Route path="/tabs/contacts" component={Contacts}/>
-                  <Route path="/tabs/conversations" component={Conversations}/>
-                  <Route path="/tabs/profile" component={Profile}/>
+        <IonReactRouter>
+            <IonRouterOutlet>
+                <Route path="/login" component={Login}/>
+                <Route path="/signup" component={Signup}/>
+                <Route path="/tabs" render={() => (
+                    <IonTabs>
+                        <IonRouterOutlet>
+                            <Route path="/tabs/contacts" component={Contacts}/>
+                            <Route exact path="/tabs/conversations" component={Conversations}/>
+                            <Route path="/tabs/conversations/messaging/:id" component={Messaging}/>
+                            <Route path="/tabs/profile" component={Profile}/>
 
-                  {/* Default Path */}
-                  <Route render={() => <Redirect to="/tabs/conversations"/>} />
-                </IonRouterOutlet>
+                            {/* Default Path */}
+                            <Route render={() => <Redirect to="/tabs/conversations"/>} />
+                        </IonRouterOutlet>
 
-                <IonTabBar slot="bottom">
-                  <IonTabButton tab="tab1" href="/tabs/contacts">
-                    <IonIcon icon={list}/>
-                    <IonLabel>Contacts</IonLabel>
-                  </IonTabButton>
+                        <IonTabBar slot="bottom">
+                            <IonTabButton tab="tab1" href="/tabs/contacts">
+                                <IonIcon icon={list}/>
+                                <IonLabel>Contacts</IonLabel>
+                            </IonTabButton>
 
-                  <IonTabButton tab="tab2" href="/tabs/conversations">
-                    <IonIcon icon={chatboxEllipses}/>
-                    <IonLabel>Conversations</IonLabel>
-                  </IonTabButton>
+                            <IonTabButton tab="tab2" href="/tabs/conversations">
+                                <IonIcon icon={chatboxEllipses}/>
+                                <IonLabel>Conversations</IonLabel>
+                            </IonTabButton>
 
-                  <IonTabButton tab="tab3" href="/tabs/profile">
-                    <IonIcon icon={person}/>
-                    <IonLabel>Profile</IonLabel>
-                  </IonTabButton>
-                </IonTabBar>
-              </IonTabs>
-          )}/>
+                            <IonTabButton tab="tab3" href="/tabs/profile">
+                                <IonIcon icon={person}/>
+                                <IonLabel>Profile</IonLabel>
+                            </IonTabButton>
+                        </IonTabBar>
+                    </IonTabs>
+                )}/>
 
-          {/* Default Path */}
-          <Route render={() => <Redirect to="/login"/>} />
-        </IonRouterOutlet>
+                {/* Default Path */}
+                <Route render={() => <Redirect to="/login"/>} />
+            </IonRouterOutlet>
 
 
-      </IonReactRouter>
+        </IonReactRouter>
     </IonApp>
 );
 
