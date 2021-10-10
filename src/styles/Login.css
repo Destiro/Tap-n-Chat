@@ -1,0 +1,19 @@
+.loginContainer {
+    width: 70%;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.input {
+    margin: 5% 0;
+}
+
+.loginButton {
+    width: 60%;
+    margin: 10% 0;
+}

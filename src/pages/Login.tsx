@@ -1,8 +1,22 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import {
+    IonButton,
+    IonContent,
+    IonHeader,
+    IonInput,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonPage,
+    IonTitle,
+    IonToolbar
+} from '@ionic/react';
 import '../styles/Login.css';
+import React, {useState} from "react";
 
 const Login: React.FC = () => {
+    const [username, setUsername] = useState<string>();
+    const [password, setPassword] = useState<string>();
+
     return (
         <IonPage>
             <IonHeader>
@@ -11,7 +25,19 @@ const Login: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <ExploreContainer name="Login" />
+                <IonList className="loginContainer">
+                    <IonItem className="input">
+                        <IonLabel position="floating">Username</IonLabel>
+                        <IonInput value={username} required onIonChange={e => setUsername(e.detail.value!)}/>
+                    </IonItem>
+
+                    <IonItem className="input">
+                        <IonLabel position="floating">Password</IonLabel>
+                        <IonInput value={password} type="password" required onIonChange={e => setPassword(e.detail.value!)}/>
+                    </IonItem>
+
+                    <IonButton className="loginButton" routerLink="/tabs">Login</IonButton>
+                </IonList>
             </IonContent>
         </IonPage>
     );
