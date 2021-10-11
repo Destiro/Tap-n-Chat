@@ -8,14 +8,37 @@ import {
     IonList,
     IonPage,
     IonTitle,
-    IonToolbar
+    IonToolbar,
+    useIonRouter
 } from '@ionic/react';
 import '../styles/Login.css';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import {checkLogin, getUsers} from "../persistence/FirebaseFunctions";
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState<string>();
     const [password, setPassword] = useState<string>();
+    const [loading, setLoading] = useState<boolean>();
+    const [users, setUsers] = useState<any>();
+    const router = useIonRouter();
+
+    function ValidateLogin() {
+        if(username === undefined || password === undefined){
+            alert("Please enter in your username and password!")
+        }else{
+            if(checkLogin(username, password, users)){
+                router.push("/tabs");
+            }else{
+                alert("Incorrect username or password!")
+            }
+        }
+    }
+
+    useEffect(() => {
+        getUsers(function (fetched: any[]){
+            setUsers(fetched);
+        })
+    }, [loading]);
 
     return (
         <IonPage>
@@ -37,7 +60,9 @@ const Login: React.FC = () => {
                         <IonInput value={password} type="password" required onIonChange={e => setPassword(e.detail.value!)}/>
                     </IonItem>
 
-                    <IonButton className="loginButton" routerLink="/tabs">Login</IonButton>
+                    <IonButton className="loginButton" onClick={() => ValidateLogin()}
+                               // routerLink="/tabs"
+                    >Login</IonButton>
                 </IonList>
 
             </IonContent>
