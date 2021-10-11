@@ -1,6 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import '../styles/Messaging.css';
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {RouteComponentProps} from "react-router";
 
 interface MessagingProps
@@ -9,11 +9,18 @@ interface MessagingProps
     }> {}
 
 const Messaging: React.FC<MessagingProps> = ({ match }) => {
+    const [contact, setContact] = useState<string>(match.params.id);
+
+    useEffect(() => {
+        setContact(match.params.id);
+    }, [match.params.id]);
+
+
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>{match.params.id}</IonTitle>
+                    <IonTitle>{contact}</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>

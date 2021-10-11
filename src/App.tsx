@@ -48,7 +48,7 @@ const App: React.FC = () => (
                     <IonTabs>
                         <IonRouterOutlet>
                             <Route path="/tabs/contacts" component={Contacts}/>
-                            <Route exact path="/tabs/conversations" component={Conversations}/>
+                            <Route path="/tabs/conversations" exact component={Conversations}/>
                             <Route path="/tabs/conversations/messaging/:id" component={Messaging}/>
                             <Route path="/tabs/profile" component={Profile}/>
 

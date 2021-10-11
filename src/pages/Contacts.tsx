@@ -20,9 +20,10 @@ interface Contact {
 
 const Contacts: React.FC = () => {
     const [contacts, setContacts] = useState<Contact[]>([
-        {name: "Connor",     pic: "pfp2"},
-        {name: "Michaiah",   pic: "pfp1"},
-        {name: "Test",       pic: "pfp3"},
+        {name: "Connor",   pic: "pfp2"},
+        {name: "Michaiah", pic: "pfp1"},
+        {name: "Justin",   pic: "pfp3"},
+        {name: "Luke",     pic: "pfp4"}
 ]);
 
     // Create the list of contact elements
@@ -30,7 +31,7 @@ const Contacts: React.FC = () => {
         const list: ReactElement[] = [];
         for (let contact of contacts) {
             list.push(
-                <IonItem button routerLink={"/tabs/conversations/messaging/" + contact.name}>
+                <IonItem key={contact.name} button routerLink={"/tabs/conversations/messaging/" + contact.name}>
                     <IonAvatar slot="start">
                         <IonImg src={"assets/profile_pics/" + contact.pic + ".png"} alt="Pic" />
                     </IonAvatar>
