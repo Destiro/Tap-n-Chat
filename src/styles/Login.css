@@ -1,12 +1,22 @@
+h1 {
+    font-size: 40px !important;
+    color: #4c8dff;
+}
+
 .loginContainer {
     width: 70%;
     position: relative;
     left: 50%;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    top: 25%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+.loginTitle {
+    top: 20%;
+    padding-bottom: 0;
 }
 
 .input {
@@ -16,4 +26,15 @@
 .loginButton {
     width: 60%;
     margin: 10% 0;
+}
+
+.signupContainer {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 70%;
+    left: 50%;
+    bottom: 15%;
+    position: relative;
+    transform: translateX(-50%);
 }
