@@ -24,7 +24,7 @@ const Contacts: React.FC = () => {
         {name: "Michaiah", pic: "pfp1"},
         {name: "Justin",   pic: "pfp3"},
         {name: "Luke",     pic: "pfp4"}
-]);
+    ]);
 
     // Create the list of contact elements
     function createList() : ReactElement[] {
