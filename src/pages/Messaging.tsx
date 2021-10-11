@@ -4,7 +4,7 @@ import {
     IonHeader, IonImg,
     IonInput,
     IonItem, IonLabel,
-    IonList,
+    IonList, IonNote,
     IonPage,
     IonTitle,
     IonToolbar
@@ -36,9 +36,12 @@ const Messaging: React.FC<MessagingProps> = ({ match }) => {
         for (let message of messages) {
             list.push(
                 <IonItem key={message.time}>
-                    <IonLabel>
+                    <IonLabel text-wrap>
                         <b>{message.sender}:</b> {message.text}
                     </IonLabel>
+                    <IonNote slot="end">
+                        {new Date(message.time).toLocaleTimeString()}
+                    </IonNote>
                 </IonItem>
             )
         }
