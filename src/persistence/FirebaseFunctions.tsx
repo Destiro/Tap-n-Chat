@@ -23,7 +23,7 @@ export function getUsers(callback: (arg0: any[]) => void) {
  */
 export function checkLogin(user: string, pass: string, users: any[]) : boolean {
     let isValidName = false;
-    
+
     //Iterate through users to see if a username & password match
     if (user !== '' && pass !== '') {
         for(let i=0; i<users.length; i++){
@@ -34,4 +34,29 @@ export function checkLogin(user: string, pass: string, users: any[]) : boolean {
     }
 
     return isValidName;
+}
+
+/**
+ * Adding a new user to the user database
+ *
+ * @param username
+ * @param password
+ * @constructor
+ */
+export function AddNewUser(username:string, password:string, fName:string, lName:string, dateJoined:string) {
+    db.firestore().collection("Users").doc(username).set({
+        username: username,
+        password: password,
+        name: fName,
+        surname: lName,
+        joined: dateJoined,
+        gender: "Not-Specified",
+        bio: "No Bio provided",
+        picture: "1",
+        contacts: [],
+    }).then(function () {
+        console.log("User successfully added!");
+    }).catch(function (error) {
+        console.error("Error adding user: ", error)
+    });
 }
