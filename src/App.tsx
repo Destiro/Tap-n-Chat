@@ -16,6 +16,7 @@ import Conversations from './pages/Conversations';
 import Profile from './pages/Profile';
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Messaging from "./pages/Messaging";
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -35,8 +36,6 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import {log} from "util";
-import Messaging from "./pages/Messaging";
 
 const App: React.FC = () => (
     <IonApp>
@@ -57,17 +56,17 @@ const App: React.FC = () => (
                         </IonRouterOutlet>
 
                         <IonTabBar slot="bottom">
-                            <IonTabButton tab="tab1" href="/tabs/contacts">
+                            <IonTabButton tab="contacts" href="/tabs/contacts">
                                 <IonIcon icon={list}/>
                                 <IonLabel>Contacts</IonLabel>
                             </IonTabButton>
 
-                            <IonTabButton tab="tab2" href="/tabs/conversations">
+                            <IonTabButton tab="conversations" href="/tabs/conversations">
                                 <IonIcon icon={chatboxEllipses}/>
                                 <IonLabel>Conversations</IonLabel>
                             </IonTabButton>
 
-                            <IonTabButton tab="tab3" href="/tabs/profile">
+                            <IonTabButton tab="profile" href="/tabs/profile">
                                 <IonIcon icon={person}/>
                                 <IonLabel>Profile</IonLabel>
                             </IonTabButton>
@@ -78,8 +77,6 @@ const App: React.FC = () => (
                 {/* Default Path */}
                 <Route render={() => <Redirect to="/login"/>} />
             </IonRouterOutlet>
-
-
         </IonReactRouter>
     </IonApp>
 );
