@@ -23,12 +23,12 @@ interface Message {
 
 const Messaging: React.FC<MessagingProps> = ({ match }) => {
     const [text, setText] = useState<string>("")
-    const [messages, setMessages] = useState<Message[]>([{sender: "Michaiah", text: "Yo", time: Date()}])
-    const [contact, setContact] = useState<string>(match.params.id);
+    const [messages] = useState<Message[]>([{sender: "Michaiah", text: "Yo", time: Date()}])
+    const [contact, setContact] = useState<string>(match?.params?.id);
 
     useEffect(() => {
-        setContact(match.params.id);
-    }, [match.params.id]);
+        setContact(match?.params?.id);
+    }, [match?.params?.id]);
 
     // Create the list of contact elements
     function createList() : ReactElement[] {
