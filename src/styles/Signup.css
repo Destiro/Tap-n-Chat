@@ -1,0 +1,21 @@
+.signupBox {
+    width: 70%;
+    position: relative;
+    left: 50%;
+    top: 10%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.loginBox {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 70%;
+    left: 50%;
+    bottom: 10%;
+    position: relative;
+    transform: translateX(-50%);
+}

@@ -18,7 +18,6 @@ import {checkLogin, getUsers} from "../persistence/FirebaseFunctions";
 const Login: React.FC = () => {
     const [username, setUsername] = useState<string>();
     const [password, setPassword] = useState<string>();
-    const [loading, setLoading] = useState<boolean>();
     const [users, setUsers] = useState<any>();
     const router = useIonRouter();
 
@@ -38,7 +37,7 @@ const Login: React.FC = () => {
         getUsers(function (fetched: any[]){
             setUsers(fetched);
         })
-    }, [loading]);
+    }, []);
 
     return (
         <IonPage>
@@ -60,12 +59,11 @@ const Login: React.FC = () => {
                         <IonInput value={password} type="password" required onIonChange={e => setPassword(e.detail.value!)}/>
                     </IonItem>
 
-                    <IonButton className="loginButton" onClick={() => ValidateLogin()}
-                               // routerLink="/tabs"
-                    >Login</IonButton>
+                    <IonButton className="loginButton" onClick={() => ValidateLogin()}>Login</IonButton>
                 </IonList>
 
             </IonContent>
+
             {/*Signup Functionality*/}
             <IonList className="signupContainer">
                 <IonTitle className="signupText">

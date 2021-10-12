@@ -55,8 +55,9 @@ export function AddNewUser(username:string, password:string, fName:string, lName
         picture: "1",
         contacts: [],
     }).then(function () {
-        console.log("User successfully added!");
+        alert("Account created successfully!");
     }).catch(function (error) {
+        alert("Error Creating User: "+error);
         console.error("Error adding user: ", error)
     });
 }
