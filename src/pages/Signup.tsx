@@ -11,15 +11,17 @@ import {
 } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import '../styles/Signup.css';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import GenerateDate from "../utility/GenerateDate";
-import {AddNewUser} from "../persistence/FirebaseFunctions";
+import {AddNewUser, getUsers} from "../persistence/FirebaseFunctions";
+import LoginExists from "../utility/LoginExists";
 
 const Signup: React.FC = () => {
     const [username, setUsername] = useState<string>();
     const [password, setPassword] = useState<string>();
     const [fName, setfName] = useState<string>();
     const [lName, setlName] = useState<string>();
+    const [users, setUsers] = useState<any>();
     const router = useIonRouter();
 
     function createSignup() {
@@ -28,10 +30,20 @@ const Signup: React.FC = () => {
             fName === undefined || lName === undefined){
             alert("Please fill in all fields!")
         }else{
-            AddNewUser(username,password,fName,lName,date);
-            router.push("/login");
+            if(!LoginExists(username, users)){
+                AddNewUser(username,password,fName,lName,date);
+                router.push("/login");
+            } else {
+                alert("Username already exists!")
+            }
         }
     }
+
+    useEffect(() => {
+        getUsers(function (fetched: any[]){
+            setUsers(fetched);
+        })
+    }, []);
 
     return (
         <IonPage>
