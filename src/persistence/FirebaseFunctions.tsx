@@ -73,8 +73,7 @@ export function AddNewUser(username:string, password:string, fName:string, lName
  * @constructor
  */
 export function OpenConversation(users:string[], callback: (arg0: Conversation) => void) {
-    users.sort();
-    const id = users.join("");
+    const id = users.sort().join("");
 
     db.database().ref("Conversations").on('value', (snapshot) => {
         const conversations = snapshot.val();
@@ -87,7 +86,13 @@ export function OpenConversation(users:string[], callback: (arg0: Conversation) 
                 messages: []
             }).then(()=>
                 callback({users: users, messages: []})
-            )
+            );
         }
     })
+}
+
+export function UpdateConversation(conversation:Conversation) {
+    const id = conversation.users.sort().join("");
+
+    db.database().ref("Conversations/" + id).set(conversation).then();
 }

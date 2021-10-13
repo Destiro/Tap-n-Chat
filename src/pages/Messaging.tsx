@@ -12,7 +12,7 @@ import '../styles/Messaging.css';
 import React, {ReactElement, useEffect, useState} from "react";
 import {RouteComponentProps} from "react-router";
 import {Conversation} from "../utility/Interfaces";
-import {OpenConversation} from "../persistence/FirebaseFunctions";
+import {OpenConversation, UpdateConversation} from "../persistence/FirebaseFunctions";
 
 interface MessagingProps extends RouteComponentProps<{ id: string; }> {}
 
@@ -23,8 +23,8 @@ const Messaging: React.FC<MessagingProps> = ({ match }) => {
 
     useEffect(() => {
         setContact(match?.params?.id);
-        if (contact !== undefined) {
-            OpenConversation(["Michaiah", contact], setConversation)
+        if (match?.params?.id !== undefined) {
+            OpenConversation(["Michaiah", match?.params?.id], setConversation)
         }
     }, [match?.params?.id]);
 
@@ -62,6 +62,7 @@ const Messaging: React.FC<MessagingProps> = ({ match }) => {
                 time: Date()
             });
             setText("");
+            UpdateConversation(conversation);
         }
     }
 
