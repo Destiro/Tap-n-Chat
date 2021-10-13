@@ -14,19 +14,19 @@ import {RouteComponentProps} from "react-router";
 import {Conversation} from "../utility/Interfaces";
 import {OpenConversation, UpdateConversation} from "../persistence/FirebaseFunctions";
 
-interface MessagingProps extends RouteComponentProps<{ id: string; }> {}
-
-const Messaging: React.FC<MessagingProps> = ({ match }) => {
+const Messaging: React.FC<RouteComponentProps> = ({ match }) => {
     const [text, setText] = useState<string>("")
-    const [contact, setContact] = useState<string>(match?.params?.id);
+    const [contact, setContact] = useState<string>();
     const [conversation, setConversation] = useState<Conversation>();
 
     useEffect(() => {
-        setContact(match?.params?.id);
-        if (match?.params?.id !== undefined) {
-            OpenConversation(["Michaiah", match?.params?.id], setConversation)
+        const id = match.url.split("/").reverse()[0];
+        setContact(id);
+
+        if (id !== undefined) {
+            OpenConversation(["Michaiah", id], setConversation)
         }
-    }, [match?.params?.id]);
+    }, [match]);
 
     // Create the list of messages
     function createList() : ReactElement[] {

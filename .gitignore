@@ -26,3 +26,8 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
+
+
+/android/app/src/main/assets/capacitor.config.json
+/android/app/src/main/AndroidManifest.xml
+/android/app/src/main/AndroidManifest.xml.orig
