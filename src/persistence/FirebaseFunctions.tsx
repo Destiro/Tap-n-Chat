@@ -91,8 +91,35 @@ export function OpenConversation(users:string[], callback: (arg0: Conversation) 
     })
 }
 
+/**
+ * Uploads the provided conversation to Firebase Realtime Database
+ *
+ * @param conversation
+ * @constructor
+ */
 export function UpdateConversation(conversation:Conversation) {
     const id = conversation.users.sort().join("");
 
     db.database().ref("Conversations/" + id).set(conversation).then();
+}
+
+/**
+ * Finds all conversations that the provided user is a part of
+ *
+ * @param user
+ * @param callback
+ * @constructor
+ */
+export function GetConversations(user:string, callback: (arg0: Conversation[]) => void) {
+    db.database().ref("Conversations").on('value', (snapshot) => {
+        const conversations : Conversation[] = [];
+
+        snapshot.forEach(conversation => {
+            if (conversation.val().users.includes(user)) {
+                conversations.push(conversation.val());
+            }
+        })
+
+        callback(conversations);
+    })
 }
