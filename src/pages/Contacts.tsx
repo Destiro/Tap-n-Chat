@@ -12,11 +12,7 @@ import {
 } from '@ionic/react';
 import '../styles/Contacts.css';
 import React, {ReactElement, useState} from "react";
-
-interface Contact {
-    name: string;
-    pic:  string;
-}
+import {Contact} from "../utility/Interfaces";
 
 const Contacts: React.FC = () => {
     const [contacts, setContacts] = useState<Contact[]>([

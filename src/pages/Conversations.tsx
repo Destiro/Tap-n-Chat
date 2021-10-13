@@ -1,9 +1,22 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 import '../styles/Conversations.css';
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {OpenConversation} from "../persistence/FirebaseFunctions";
+import {Conversation} from "../utility/Interfaces";
 
 const Conversations: React.FC = () => {
+    // const [temp, setTemp] = useState<Conversation>();
+    //
+    // useEffect(()=>{
+    //     OpenConversation(["Michaiah", "Justin"], setTemp);
+    //     console.log(temp)
+    // }, [])
+    //
+    // useEffect(() => {
+    //     console.log(temp)
+    // }, [temp])
+
+
     return (
         <IonPage>
             <IonHeader>
@@ -13,12 +26,7 @@ const Conversations: React.FC = () => {
             </IonHeader>
 
             <IonContent fullscreen>
-                <IonHeader collapse="condense">
-                    <IonToolbar>
-                        <IonTitle size="large">Tab 2</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
-                <ExploreContainer name="Conversations" />
+
             </IonContent>
         </IonPage>
     );

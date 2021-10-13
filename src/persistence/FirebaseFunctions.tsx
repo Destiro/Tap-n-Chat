@@ -1,4 +1,5 @@
 import {db} from "../config/FirebaseConfig";
+import {Conversation, Message} from "../utility/Interfaces";
 
 /**
  * Getting all users from firestore
@@ -20,6 +21,7 @@ export function getUsers(callback: (arg0: any[]) => void) {
  *
  * @param user
  * @param pass
+ * @param users
  */
 export function checkLogin(user: string, pass: string, users: any[]) : boolean {
     let isValidName = false;
@@ -41,6 +43,9 @@ export function checkLogin(user: string, pass: string, users: any[]) : boolean {
  *
  * @param username
  * @param password
+ * @param fName
+ * @param lName
+ * @param dateJoined
  * @constructor
  */
 export function AddNewUser(username:string, password:string, fName:string, lName:string, dateJoined:string) {
@@ -60,4 +65,29 @@ export function AddNewUser(username:string, password:string, fName:string, lName
         alert("Error Creating User: "+error);
         console.error("Error adding user: ", error)
     });
+}
+
+/**
+ * Finds and returns a new or existing conversation
+ *
+ * @constructor
+ */
+export function OpenConversation(users:string[], callback: (arg0: Conversation) => void) {
+    users.sort();
+    const id = users.join("");
+
+    db.database().ref("Conversations").on('value', (snapshot) => {
+        const conversations = snapshot.val();
+
+        if (conversations[id] !== undefined) {
+            callback(conversations[id]);
+        } else {
+            db.database().ref("Conversations/"+id).set({
+                users: users,
+                messages: []
+            }).then(()=>
+                callback({users: users, messages: []})
+            )
+        }
+    })
 }

@@ -1,14 +1,12 @@
 import {
     IonButton,
     IonContent,
-    IonHeader,
     IonInput,
     IonItem,
     IonLabel,
     IonList,
     IonPage,
     IonTitle,
-    IonToolbar,
     useIonRouter
 } from '@ionic/react';
 import '../styles/Login.css';
@@ -22,21 +20,19 @@ const Login: React.FC = () => {
     const router = useIonRouter();
 
     function ValidateLogin() {
-        if(username === undefined || password === undefined){
+        if (username === undefined || password === undefined) {
             alert("Please enter in your username and password!")
-        }else{
-            if(checkLogin(username, password, users)){
+        } else {
+            if (checkLogin(username, password, users)) {
                 router.push("/tabs");
-            }else{
+            } else {
                 alert("Incorrect username or password!")
             }
         }
     }
 
     useEffect(() => {
-        getUsers(function (fetched: any[]){
-            setUsers(fetched);
-        })
+        getUsers(setUsers)
     }, []);
 
     return (
@@ -46,17 +42,24 @@ const Login: React.FC = () => {
                 {/*Login functionality*/}
                 <IonList className="loginContainer">
                     <IonTitle className="loginTitle">
-                        <h1> Tap'n'Chat </h1>
+                        <h1>Tap'n'Chat</h1>
                     </IonTitle>
 
                     <IonItem className="input">
                         <IonLabel position="floating">Username</IonLabel>
-                        <IonInput value={username} required onIonChange={e => setUsername(e.detail.value!)}/>
+                        <IonInput
+                            value={username}
+                            onIonChange={e => setUsername(e.detail.value!)}
+                        />
                     </IonItem>
 
                     <IonItem className="input">
                         <IonLabel position="floating">Password</IonLabel>
-                        <IonInput value={password} type="password" required onIonChange={e => setPassword(e.detail.value!)}/>
+                        <IonInput
+                            value={password}
+                            type="password"
+                            onIonChange={e => setPassword(e.detail.value!)}
+                        />
                     </IonItem>
 
                     <IonButton className="loginButton" onClick={() => ValidateLogin()}>Login</IonButton>
