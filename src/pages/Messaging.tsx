@@ -13,6 +13,7 @@ import React, {ReactElement, useEffect, useState} from "react";
 import {RouteComponentProps} from "react-router";
 import {Conversation} from "../utility/Interfaces";
 import {OpenConversation, UpdateConversation} from "../persistence/FirebaseFunctions";
+import {FormatMessageTime} from "../utility/DateFormatters";
 
 const Messaging: React.FC<RouteComponentProps> = ({ match }) => {
     const [text, setText] = useState<string>("")
@@ -40,7 +41,7 @@ const Messaging: React.FC<RouteComponentProps> = ({ match }) => {
                             <b>{message.sender}:</b> {message.message}
                         </IonLabel>
                         <IonNote slot="end">
-                            {new Date(message.time).toLocaleTimeString()}
+                            {FormatMessageTime(new Date(message.time))}
                         </IonNote>
                     </IonItem>
                 )

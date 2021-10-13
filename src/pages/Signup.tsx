@@ -1,18 +1,17 @@
 import {
     IonButton,
     IonContent,
-    IonHeader,
     IonInput,
     IonItem,
     IonLabel, IonList,
     IonPage,
     IonTitle,
-    IonToolbar, useIonRouter
+    useIonRouter
 } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import '../styles/Signup.css';
 import React, {useEffect, useState} from "react";
-import GenerateDate from "../utility/GenerateDate";
+import {FormatDate} from "../utility/DateFormatters";
 import {AddNewUser, getUsers} from "../persistence/FirebaseFunctions";
 import LoginExists from "../utility/LoginExists";
 
@@ -25,7 +24,7 @@ const Signup: React.FC = () => {
     const router = useIonRouter();
 
     function createSignup() {
-        let date:string = GenerateDate();
+        let date:string = FormatDate(new Date());
         if(username === undefined || password === undefined ||
             fName === undefined || lName === undefined){
             alert("Please fill in all fields!")
