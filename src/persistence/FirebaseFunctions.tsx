@@ -1,3 +1,4 @@
+import firebase from "firebase";
 import {db} from "../config/FirebaseConfig";
 import {Conversation, User} from "../utility/Interfaces";
 
@@ -28,8 +29,8 @@ export function checkLogin(user: string, pass: string, users: User[]) : boolean 
 
     //Iterate through users to see if a username & password match
     if (user !== '' && pass !== '') {
-        for(let i=0; i<users.length; i++){
-            if(users[i].username === user && users[i].password === pass){
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].username === user && users[i].password === pass) {
                 isValidName = true;
             }
         }
@@ -62,10 +63,29 @@ export function addNewUser(username:string, password:string, fName:string, lName
     }).then(function () {
         alert("Account created successfully!");
     }).catch(function (error) {
-        alert("Error Creating User: "+error);
+        alert("Error Creating User: " + error);
         console.error("Error adding user: ", error)
     });
 }
+
+/**
+ * Get a user object from firestore to display info for their profile page
+ *
+ * @param username
+ * @param callback
+ */
+export function getUser(username: string, callback: (arg0: firebase.firestore.DocumentData) => void) {
+    db.firestore().collection("Users").onSnapshot((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            if(doc.data().username === username){
+                console.log("found user");
+                console.log(doc.data());
+                callback(doc.data());
+            }
+        });
+    })
+}
+
 
 /**
  * Finds and returns a new or existing conversation
