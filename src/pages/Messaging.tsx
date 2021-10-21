@@ -17,15 +17,15 @@ import {FormatMessageTime} from "../utility/DateFormatters";
 
 const Messaging: React.FC<RouteComponentProps> = ({ match }) => {
     const [text, setText] = useState<string>("")
-    const [contact, setContact] = useState<string>();
+    const [contacts, setContacts] = useState<string[]>([]);
     const [conversation, setConversation] = useState<Conversation>();
 
     useEffect(() => {
-        const id = match.url.split("/").reverse()[0];
-        setContact(id);
+        const ids = match.url.split("/").reverse()[0].split("-");
+        setContacts(ids);
 
-        if (id !== undefined) {
-            OpenConversation(["Michaiah", id], setConversation)
+        if (ids.length > 0) {
+            OpenConversation(ids, setConversation);
         }
     }, [match]);
 
@@ -71,7 +71,7 @@ const Messaging: React.FC<RouteComponentProps> = ({ match }) => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>{contact}</IonTitle>
+                    <IonTitle>{contacts.sort().join(", ")}</IonTitle>
                 </IonToolbar>
             </IonHeader>
 

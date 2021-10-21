@@ -26,7 +26,7 @@ const Contacts: React.FC = () => {
         const list: ReactElement[] = [];
         for (let contact of contacts) {
             list.push(
-                <IonItem key={contact.name} button routerLink={"/tabs/conversations/messaging/" + contact.name}>
+                <IonItem key={contact.name} button routerLink={"/tabs/conversations/messaging/Michaiah-" + contact.name}>
                     <IonAvatar slot="start">
                         <IonImg src={"assets/profile_pics/" + contact.pic + ".png"} alt="Pic" />
                     </IonAvatar>
