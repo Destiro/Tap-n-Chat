@@ -45,17 +45,13 @@ const Profile: React.FC = () => {
                                         <h2>FirstName: {user.name}</h2>
                                         <h2>LastName: {user.surname}</h2>
                                     </IonTitle>
-                                    <IonList className="profileContent">
-                                        <IonItem className="baseInfo">
-                                            <h3>Joined: {user.joined}, Gender: {user.gender}</h3>
-                                        </IonItem>
-                                        <IonItem className="bioInfo">
+                                            <h3>Joined: {user.joined}</h3>
+                                    <h3> Gender: {user.gender}</h3>
                                             <h3>Bio:</h3>
                                             <div className="bioBox">
                                                 <h4>{user.bio}</h4>
                                             </div>
-                                        </IonItem>
-                                    </IonList>
+                                    <div className="space" />
                                 </div>
                             </>
                     }

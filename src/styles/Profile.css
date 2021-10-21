@@ -9,24 +9,25 @@
 .lowerBlock {
     position: relative;
     width: 100%;
-    height: 80%;
+    min-height: 100%;
     display: block;
     text-align: center;
+    align-items: center;
     padding-top: 100px;
     background-color: #d0d0d0;
     margin-top: 30%;
 }
 
 .topButtons {
-    transform: translateX(58%);
+    transform: translateX(55%);
 }
 
 .editProfileButton {
-    margin-left: -225px;
+    margin-left: -50%;
 }
 
 .logoutButton {
-    margin-left: 225px;
+    margin-left: 50%;
 }
 
 .img {
@@ -38,6 +39,20 @@
     z-index: 1;
 }
 
-h2 {
+h2, h3, h4 {
     color: black;
+}
+
+.bioBox {
+    width: 80%;
+    min-height: 200px;
+    background-color: white;
+    text-align: center;
+    margin-left: 10%;
+    display: block;
+    border: 2px black;
+}
+
+.space {
+    min-height: 150px;
 }
