@@ -1,47 +1,36 @@
-import {IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, useIonRouter} from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import {IonContent, IonHeader, IonList, IonPage, IonTitle} from '@ionic/react';
 import '../styles/Profile.css';
 import React, {useEffect, useState} from "react";
-import {getUser, getUsers} from "../persistence/FirebaseFunctions";
+import {storage} from "../persistence/LocalStorage";
+import {User} from "../utility/Interfaces";
 
 const Profile: React.FC = () => {
-    const [user, setUser] = useState<any>();
-    const router = useIonRouter();
-
+    const [user, setUser] = useState<User>();
 
     useEffect(() => {
-        getUser("a", function(tempUser: any):void {
-            setUser(tempUser);
-        })
+        storage.getUser(setUser)
     }, []);
 
-    console.log(user);
     return (
-        user===undefined?(
-                // User hasnt loaded, display loading message
-    <IonPage>
-        <IonContent fullscreen>
-        <IonList className="profileContainer">
-            <IonTitle className="profileNames">
-                <h1> Loading User...</h1>
-            </IonTitle>
-        </IonList>
-        </IonContent>
-    </IonPage>
-        ) : (
-        //User has loaded, display profile
-            <IonPage>
-                <IonContent fullscreen>
-                    <IonList className="profileContainer">
+        <IonPage>
+            <IonContent fullscreen>
+                <IonList className="profileContainer">
+                    {
+                        // Display loading message if user hasn't loaded
+                        !user ?
+                        <IonTitle className="profileNames">
+                            <h1> Loading User...</h1>
+                        </IonTitle>
+                        :
                         <IonTitle className="profileNames">
                             <h2>FirstName: {user.name}</h2>
                             <h2>LastName: {user.surname}</h2>
                         </IonTitle>
-                    </IonList>
-                </IonContent>
-            </IonPage>
-        )
-  );
+                    }
+                </IonList>
+            </IonContent>
+        </IonPage>
+    );
 };
 
 export default Profile;

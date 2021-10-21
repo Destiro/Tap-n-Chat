@@ -1,4 +1,3 @@
-import firebase from "firebase";
 import {db} from "../config/FirebaseConfig";
 import {Conversation, User} from "../utility/Interfaces";
 
@@ -74,13 +73,12 @@ export function addNewUser(username:string, password:string, fName:string, lName
  * @param username
  * @param callback
  */
-export function getUser(username: string, callback: (arg0: firebase.firestore.DocumentData) => void) {
+export function getUser(username: string, callback: (arg0: User) => void) {
     db.firestore().collection("Users").onSnapshot((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             if(doc.data().username === username){
-                console.log("found user");
-                console.log(doc.data());
-                callback(doc.data());
+                // Without json calls it won't believe that doc.data() is a valid user object
+                callback(JSON.parse(JSON.stringify(doc.data())));
             }
         });
     })
