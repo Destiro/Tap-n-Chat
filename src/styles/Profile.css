@@ -1,0 +1,43 @@
+.upperBlock {
+    position: relative;
+    width: 100%;
+    height: 20%;
+    display: block;
+    background-color: #2dd36f;
+}
+
+.lowerBlock {
+    position: relative;
+    width: 100%;
+    height: 80%;
+    display: block;
+    text-align: center;
+    padding-top: 100px;
+    background-color: #d0d0d0;
+    margin-top: 30%;
+}
+
+.topButtons {
+    transform: translateX(58%);
+}
+
+.editProfileButton {
+    margin-left: -225px;
+}
+
+.logoutButton {
+    margin-left: 225px;
+}
+
+.img {
+    transform: translateX(50%);
+    position: absolute;
+    top: 10%;
+    width: 200px;
+    height: 200px;
+    z-index: 1;
+}
+
+h2 {
+    color: black;
+}

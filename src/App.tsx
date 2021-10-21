@@ -17,6 +17,7 @@ import Profile from './pages/Profile';
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Messaging from "./pages/Messaging";
+import EditProfile from "./pages/EditProfile";
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -50,6 +51,7 @@ const App: React.FC = () => (
                             <Route path="/tabs/conversations" exact component={Conversations}/>
                             <Route path="/tabs/conversations/messaging/:id" component={Messaging}/>
                             <Route path="/tabs/profile" component={Profile}/>
+                            <Route path="/tabs/editprofile" component={EditProfile}/>
 
                             {/* Default Path */}
                             <Route render={() => <Redirect to="/tabs/conversations"/>} />
