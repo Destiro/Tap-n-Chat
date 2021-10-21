@@ -1,17 +1,22 @@
 import {IonContent, IonHeader, IonItem, IonLabel, IonList, IonNote, IonPage, IonTitle, IonToolbar} from '@ionic/react';
 import '../styles/Conversations.css';
 import React, {ReactElement, useEffect, useState} from "react";
-import {GetConversations} from "../persistence/FirebaseFunctions";
-import {Conversation} from "../utility/Interfaces";
+import {getConversations} from "../persistence/FirebaseFunctions";
+import {Conversation, User} from "../utility/Interfaces";
 import {FormatMessageTime} from "../utility/DateFormatters";
+import {storage} from "../persistence/LocalStorage";
 
 const Conversations: React.FC = () => {
-    const currentUser : string = "Michaiah";
+    const [currentUser, setCurrentUser] = useState<User>();
     const [conversations, setConversations] = useState<Conversation[]>();
 
     useEffect(()=>{
-        GetConversations(currentUser, setConversations)
+        storage.getUser(setCurrentUser)
     }, [])
+
+    useEffect(()=>{
+        if (currentUser) getConversations(currentUser.username, setConversations)
+    }, [currentUser])
 
     function createList() : ReactElement[] {
         const list : ReactElement[] = []

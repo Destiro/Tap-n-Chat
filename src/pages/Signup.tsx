@@ -12,7 +12,7 @@ import ExploreContainer from '../components/ExploreContainer';
 import '../styles/Signup.css';
 import React, {useEffect, useState} from "react";
 import {FormatDate} from "../utility/DateFormatters";
-import {AddNewUser, getUsers} from "../persistence/FirebaseFunctions";
+import {addNewUser, getUsers} from "../persistence/FirebaseFunctions";
 import LoginExists from "../utility/LoginExists";
 
 const Signup: React.FC = () => {
@@ -30,7 +30,7 @@ const Signup: React.FC = () => {
             alert("Please fill in all fields!")
         }else{
             if(!LoginExists(username, users)){
-                AddNewUser(username,password,fName,lName,date);
+                addNewUser(username,password,fName,lName,date);
                 router.push("/login");
             } else {
                 alert("Username already exists!")

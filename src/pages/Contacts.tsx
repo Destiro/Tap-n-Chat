@@ -10,32 +10,41 @@ import {
     IonToolbar
 } from '@ionic/react';
 import '../styles/Contacts.css';
-import React, {ReactElement, useState} from "react";
-import {Contact} from "../utility/Interfaces";
+import React, {ReactElement, useEffect, useState} from "react";
+import {User} from "../utility/Interfaces";
+import {getUsers} from "../persistence/FirebaseFunctions";
+import {storage} from "../persistence/LocalStorage";
 
 const Contacts: React.FC = () => {
-    const [contacts, setContacts] = useState<Contact[]>([
-        {name: "Connor",   pic: "pfp2"},
-        {name: "Michaiah", pic: "pfp1"},
-        {name: "Justin",   pic: "pfp3"},
-        {name: "Luke",     pic: "pfp4"}
-    ]);
+    const [allUsers, setAllUsers] = useState<User[]>()
+    const [currentUser, setCurrentUser] = useState<User>();
+
+    useEffect(()=>{
+        getUsers(setAllUsers);
+        storage.getUser(setCurrentUser);
+    }, [])
 
     // Create the list of contact elements
     function createList() : ReactElement[] {
         const list: ReactElement[] = [];
-        for (let contact of contacts) {
-            list.push(
-                <IonItem key={contact.name} button routerLink={"/tabs/conversations/messaging/Michaiah-" + contact.name}>
-                    <IonAvatar slot="start">
-                        <IonImg src={"assets/profile_pics/" + contact.pic + ".png"} alt="Pic" />
-                    </IonAvatar>
-                    <IonLabel>
-                        {contact.name}
-                    </IonLabel>
-                </IonItem>
-            )
+
+        if (allUsers && currentUser) {
+            for (let user of allUsers) {
+                if (currentUser.contacts.includes(user.username))
+                    list.push(
+                        <IonItem key={user.username} button
+                                 routerLink={"/tabs/conversations/messaging/" + currentUser.username + "-" + user.username}>
+                            <IonAvatar slot="start">
+                                <IonImg src={"assets/profile_pics/pfp" + user.picture + ".png"} alt="Pic"/>
+                            </IonAvatar>
+                            <IonLabel>
+                                {user.name}
+                            </IonLabel>
+                        </IonItem>
+                    )
+            }
         }
+
         return list;
     }
 

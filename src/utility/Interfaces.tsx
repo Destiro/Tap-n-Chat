@@ -1,6 +1,13 @@
-export interface Contact {
+export interface User {
+    username: string;
+    password: string;
     name: string;
-    pic:  string;
+    surname: string;
+    joined: string;
+    gender: string;
+    bio: string;
+    picture:  string;
+    contacts: string[];
 }
 
 export interface Message {

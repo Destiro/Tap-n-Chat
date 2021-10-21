@@ -11,21 +11,27 @@ import {
 import '../styles/Messaging.css';
 import React, {ReactElement, useEffect, useState} from "react";
 import {RouteComponentProps} from "react-router";
-import {Conversation} from "../utility/Interfaces";
-import {OpenConversation, UpdateConversation} from "../persistence/FirebaseFunctions";
+import {Conversation, User} from "../utility/Interfaces";
+import {openConversation, updateConversation} from "../persistence/FirebaseFunctions";
 import {FormatMessageTime} from "../utility/DateFormatters";
+import {storage} from "../persistence/LocalStorage";
 
 const Messaging: React.FC<RouteComponentProps> = ({ match }) => {
     const [text, setText] = useState<string>("")
     const [contacts, setContacts] = useState<string[]>([]);
     const [conversation, setConversation] = useState<Conversation>();
+    const [currentUser, setCurrentUser] = useState<User>();
+
+    useEffect(()=>{
+        storage.getUser(setCurrentUser);
+    }, [])
 
     useEffect(() => {
         const ids = match.url.split("/").reverse()[0].split("-");
         setContacts(ids);
 
         if (ids.length > 0) {
-            OpenConversation(ids, setConversation);
+            openConversation(ids, setConversation);
         }
     }, [match]);
 
@@ -51,19 +57,22 @@ const Messaging: React.FC<RouteComponentProps> = ({ match }) => {
         return list;
     }
 
-
     function sendMessage() {
-        if (text.trim().length > 0 && conversation !== undefined) {
-            if (conversation.messages === undefined) {
-                conversation.messages = [];
+        if (currentUser) {
+            if (text.trim().length > 0 && conversation !== undefined) {
+                if (conversation.messages === undefined) {
+                    conversation.messages = [];
+                }
+                conversation.messages.push({
+                    sender: currentUser.name,
+                    message: text,
+                    time: Date()
+                });
+                setText("");
+                updateConversation(conversation);
             }
-            conversation.messages.push({
-                sender: "Michaiah",
-                message: text,
-                time: Date()
-            });
-            setText("");
-            UpdateConversation(conversation);
+        } else {
+            alert("Error sending message, please try again");
         }
     }
 

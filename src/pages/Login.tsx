@@ -12,18 +12,28 @@ import {
 import '../styles/Login.css';
 import React, {useEffect, useState} from "react";
 import {checkLogin, getUsers} from "../persistence/FirebaseFunctions";
+import {storage} from "../persistence/LocalStorage";
+import {User} from "../utility/Interfaces";
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState<string>();
     const [password, setPassword] = useState<string>();
-    const [users, setUsers] = useState<any>();
+    const [users, setUsers] = useState<User[]>();
     const router = useIonRouter();
 
     function ValidateLogin() {
         if (username === undefined || password === undefined) {
             alert("Please enter in your username and password!")
         } else {
-            if (checkLogin(username, password, users)) {
+            if (users === undefined) {
+                alert("Connection error, please try again");
+            } else if (checkLogin(username, password, users)) {
+                for (let user of users) {
+                    if (user.username === username) {
+                        storage.storeUser(user);
+                    }
+                }
+
                 router.push("/tabs");
             } else {
                 alert("Incorrect username or password!")

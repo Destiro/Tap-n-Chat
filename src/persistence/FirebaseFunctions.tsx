@@ -1,14 +1,14 @@
 import {db} from "../config/FirebaseConfig";
-import {Conversation, Message} from "../utility/Interfaces";
+import {Conversation, User} from "../utility/Interfaces";
 
 /**
  * Getting all users from firestore
  *
  * @param callback
  */
-export function getUsers(callback: (arg0: any[]) => void) {
+export function getUsers(callback: (arg0: User[]) => void) {
     db.firestore().collection("Users").onSnapshot((querySnapshot: any) => {
-        const users: any[] = [];
+        const users: User[] = [];
         querySnapshot.forEach((doc: { data: () => any; }) => {
             users.push(doc.data());
         });
@@ -23,7 +23,7 @@ export function getUsers(callback: (arg0: any[]) => void) {
  * @param pass
  * @param users
  */
-export function checkLogin(user: string, pass: string, users: any[]) : boolean {
+export function checkLogin(user: string, pass: string, users: User[]) : boolean {
     let isValidName = false;
 
     //Iterate through users to see if a username & password match
@@ -48,7 +48,7 @@ export function checkLogin(user: string, pass: string, users: any[]) : boolean {
  * @param dateJoined
  * @constructor
  */
-export function AddNewUser(username:string, password:string, fName:string, lName:string, dateJoined:string) {
+export function addNewUser(username:string, password:string, fName:string, lName:string, dateJoined:string) {
     db.firestore().collection("Users").doc(username).set({
         username: username,
         password: password,
@@ -72,13 +72,13 @@ export function AddNewUser(username:string, password:string, fName:string, lName
  *
  * @constructor
  */
-export function OpenConversation(users:string[], callback: (arg0: Conversation) => void) {
+export function openConversation(users:string[], callback: (arg0: Conversation) => void) {
     const id = users.sort().join("");
 
     db.database().ref("Conversations").on('value', (snapshot) => {
         const conversations = snapshot.val();
 
-        if (conversations[id] !== undefined) {
+        if (conversations && conversations[id]) {
             callback(conversations[id]);
         } else {
             db.database().ref("Conversations/"+id).set({
@@ -97,7 +97,7 @@ export function OpenConversation(users:string[], callback: (arg0: Conversation) 
  * @param conversation
  * @constructor
  */
-export function UpdateConversation(conversation:Conversation) {
+export function updateConversation(conversation:Conversation) {
     const id = conversation.users.sort().join("");
 
     db.database().ref("Conversations/" + id).set(conversation).then();
@@ -110,7 +110,7 @@ export function UpdateConversation(conversation:Conversation) {
  * @param callback
  * @constructor
  */
-export function GetConversations(user:string, callback: (arg0: Conversation[]) => void) {
+export function getConversations(user:string, callback: (arg0: Conversation[]) => void) {
     db.database().ref("Conversations").on('value', (snapshot) => {
         const conversations : Conversation[] = [];
 
