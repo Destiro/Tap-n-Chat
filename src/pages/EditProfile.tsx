@@ -6,7 +6,7 @@ import {
     IonItem,
     IonLabel,
     IonList,
-    IonPage,
+    IonPage, IonTextarea,
     IonTitle,
     IonToolbar, useIonRouter
 } from '@ionic/react';
@@ -100,7 +100,7 @@ const EditProfile: React.FC = () => {
 
                     <IonItem className="input">
                         <IonLabel position="floating">Bio</IonLabel>
-                        <IonInput value={bio} required onIonChange={e => setBio(e.detail.value!)}/>
+                        <IonTextarea value={bio} required onIonChange={e => setBio(e.detail.value!)}/>
                     </IonItem>
                 </IonList>
             </IonContent>
