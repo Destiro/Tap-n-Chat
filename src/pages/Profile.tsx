@@ -24,6 +24,16 @@ const Profile: React.FC = () => {
 
     return (
         <IonPage>
+            <IonHeader>
+                <IonToolbar className="topButtons">
+                    <IonButton className="editProfileButton" slot="start" routerLink="/tabs/profile/editprofile">
+                        Edit
+                    </IonButton>
+                    <IonButton className="logoutButton" slot="end" routerLink="/login">
+                        Logout
+                    </IonButton>
+                </IonToolbar>
+            </IonHeader>
             <IonContent fullscreen>
                 <IonList className="profileContainer">
                     {
@@ -34,17 +44,6 @@ const Profile: React.FC = () => {
                             </IonTitle>
                             :
                             <>
-                                <IonHeader>
-                                    <IonToolbar className="topButtons">
-                                        <IonButton className="editProfileButton" slot="start" routerLink="/tabs/editprofile">
-                                            Edit
-                                        </IonButton>
-                                        <IonButton className="logoutButton" slot="end" routerLink="/login">
-                                            Logout
-                                        </IonButton>
-                                    </IonToolbar>
-                                </IonHeader>
-
                                 <div className="upperBlock" />
                                 <IonImg className="img" src={"assets/profile_pics/pfp" + user.picture + ".png"} alt="Pic"/>
                                 <div className="lowerBlock">

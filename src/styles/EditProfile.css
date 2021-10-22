@@ -9,27 +9,23 @@
     transform: translateX(-50%);
 }
 
-.profileButton {
-    position: absolute;
-    left: 10px;
-    top: 10px;
+.backButton {
+    margin-left: 5%;
+}
+
+.saveButton {
+    margin-right: 5%;
 }
 
 .editProfileBox {
     background-color: #d0d0d0;
     width: 70%;
     position: relative;
-    left: 50%;
-    top: 10%;
-    transform: translateX(-50%);
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     align-items: center;
     flex-direction: column;
-}
-
-.saveButton {
-    margin-top: 20%;
-    margin-bottom: 5%;
 }
 
 .imgPFP {

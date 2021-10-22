@@ -8,36 +8,53 @@ import {
     IonList,
     IonPage,
     IonTitle,
-    IonToolbar
+    IonToolbar, useIonRouter
 } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 import '../styles/EditProfile.css';
 import React, {useEffect, useState} from "react";
 import {storage} from "../persistence/LocalStorage";
 import {User} from "../utility/Interfaces";
+import {storeUser} from "../persistence/FirebaseFunctions";
 
 const EditProfile: React.FC = () => {
     //Wall of states
+    const [user, setUser] = useState<User>();
     const [fName, setfName] = useState<string>();
     const [lName, setlName] = useState<string>();
     const [bio, setBio] = useState<string>();
     const [gender, setGender] = useState<string>();
     const [image, setImage] = useState<string>();
-    const [user, setUser] = useState<User>();
+
+    const router = useIonRouter();
 
     //Load pre-existing user details
     useEffect(() => {
         storage.getUser(setUser)
-        setfName(user?.name);
-        setlName(user?.surname);
-        setBio(user?.bio);
-        setImage(user?.picture);
-        setGender(user?.gender);
     }, []);
 
+    useEffect(() => {
+        if (user) {
+            setfName(user.name);
+            setlName(user.surname);
+            setBio(user.bio);
+            setImage(user.picture);
+            setGender(user.gender);
+        }
+    }, [user])
+
     function saveProfile(){
-        alert("user pressed save"); //todo call firebase function to set user with these vars
-        //todo update local user also
+        if (user && fName && lName && bio && gender && image) {
+            user.name = fName;
+            user.surname = lName;
+            user.bio = bio;
+            user.gender = gender;
+            user.picture = image;
+
+            storage.storeUser(user);
+            storeUser(user);
+        }
+
+        router.goBack();
     }
 
     function changeImage(){
@@ -46,9 +63,17 @@ const EditProfile: React.FC = () => {
 
     return (
         <IonPage>
+            <IonHeader>
+                <IonToolbar className="topButtons">
+                    <IonButton className="backButton" slot="start" routerLink="/tabs/profile">
+                        Back
+                    </IonButton>
+                    <IonButton className="saveButton" slot="end" onClick={saveProfile}>
+                        Save Changes
+                    </IonButton>
+                </IonToolbar>
+            </IonHeader>
             <IonContent fullscreen>
-                <IonButton className="profileButton" routerLink="/tabs/profile">Back</IonButton>
-
                 {/*Edit Profile Functionality*/}
                 <IonList className="editProfileBox">
                     <IonTitle className="signupTitle">
@@ -77,8 +102,6 @@ const EditProfile: React.FC = () => {
                         <IonLabel position="floating">Bio</IonLabel>
                         <IonInput value={bio} required onIonChange={e => setBio(e.detail.value!)}/>
                     </IonItem>
-
-                    <IonButton className="saveButton" onClick={() => saveProfile()}>Save Changes</IonButton>
                 </IonList>
             </IonContent>
         </IonPage>

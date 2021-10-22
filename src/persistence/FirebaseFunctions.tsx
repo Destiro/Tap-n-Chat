@@ -39,31 +39,17 @@ export function checkLogin(user: string, pass: string, users: User[]) : boolean 
 }
 
 /**
- * Adding a new user to the user database
+ * Stores a user in the user database
  *
- * @param username
- * @param password
- * @param fName
- * @param lName
- * @param dateJoined
+ * @param user
  * @constructor
  */
-export function addNewUser(username:string, password:string, fName:string, lName:string, dateJoined:string) {
-    db.firestore().collection("Users").doc(username).set({
-        username: username,
-        password: password,
-        name: fName,
-        surname: lName,
-        joined: dateJoined,
-        gender: "Not-Specified",
-        bio: "No Bio provided",
-        picture: "1",
-        contacts: [],
-    }).then(function () {
-        alert("Account created successfully!");
-    }).catch(function (error) {
-        alert("Error Creating User: " + error);
-        console.error("Error adding user: ", error)
+export function storeUser(user:User) {
+    db.firestore().collection("Users").doc(user.username).set(user).then(() =>
+        alert("User saved successfully!")
+    ).catch(error => {
+        alert("Error saving user: " + error);
+        console.error("Error saving user: ", error);
     });
 }
 

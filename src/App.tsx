@@ -50,8 +50,8 @@ const App: React.FC = () => (
                             <Route path="/tabs/contacts" component={Contacts}/>
                             <Route path="/tabs/conversations" exact component={Conversations}/>
                             <Route path="/tabs/conversations/messaging/:id" component={Messaging}/>
-                            <Route path="/tabs/profile" component={Profile}/>
-                            <Route path="/tabs/editprofile" component={EditProfile}/>
+                            <Route path="/tabs/profile" exact component={Profile}/>
+                            <Route path="/tabs/profile/editprofile" component={EditProfile}/>
 
                             {/* Default Path */}
                             <Route render={() => <Redirect to="/tabs/conversations"/>} />
