@@ -19,21 +19,22 @@
 }
 
 .topButtons {
-    transform: translateX(55%);
 }
 
 .editProfileButton {
-    margin-left: -50%;
+    margin-left: 5%;
 }
 
 .logoutButton {
-    margin-left: 50%;
+    margin-right: 5%;
 }
 
 .img {
-    transform: translateX(50%);
     position: absolute;
+    margin: auto;
     top: 10%;
+    left: 0;
+    right: 0;
     width: 200px;
     height: 200px;
     z-index: 1;
