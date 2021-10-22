@@ -48,7 +48,6 @@ const Login: React.FC = () => {
     return (
         <IonPage>
             <IonContent fullscreen>
-
                 {/*Login functionality*/}
                 <IonList className="loginContainer">
                     <IonTitle className="loginTitle">
@@ -73,17 +72,14 @@ const Login: React.FC = () => {
                     </IonItem>
 
                     <IonButton className="loginButton" onClick={() => ValidateLogin()}>Login</IonButton>
+
+                    {/*Signup Functionality*/}
+                    <IonTitle className="signupText">
+                        <h4> Don't have an account? </h4>
+                    </IonTitle>
+                    <IonButton className="signupButton" routerLink="/signup">Signup</IonButton>
                 </IonList>
-
             </IonContent>
-
-            {/*Signup Functionality*/}
-            <IonList className="signupContainer">
-                <IonTitle className="signupText">
-                    <h4> Don't have an account? </h4>
-                </IonTitle>
-                <IonButton className="signupButton" routerLink="/signup">Signup</IonButton>
-            </IonList>
         </IonPage>
     );
 };
