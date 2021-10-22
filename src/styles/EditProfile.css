@@ -1,0 +1,40 @@
+.saveBox {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 70%;
+    left: 50%;
+    bottom: 15%;
+    position: relative;
+    transform: translateX(-50%);
+}
+
+.profileButton {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.editProfileBox {
+    background-color: #d0d0d0;
+    width: 70%;
+    position: relative;
+    left: 50%;
+    top: 10%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.saveButton {
+    margin-top: 20%;
+    margin-bottom: 5%;
+}
+
+.imgPFP {
+    margin-top: 10%;
+    position: relative;
+    width: 100px;
+    height: 100px;
+}

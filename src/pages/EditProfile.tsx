@@ -1,7 +1,7 @@
 import {
     IonButton,
     IonContent,
-    IonHeader,
+    IonHeader, IonImg,
     IonInput,
     IonItem,
     IonLabel,
@@ -47,17 +47,15 @@ const EditProfile: React.FC = () => {
     return (
         <IonPage>
             <IonContent fullscreen>
-                <IonHeader className="topButtons">
-                    <IonButton className="profileButton" routerLink="/tabs/profile">Back</IonButton>
-                    <IonButton className="saveButton" onClick={() => saveProfile()}>Save</IonButton>
-                </IonHeader>
+                <IonButton className="profileButton" routerLink="/tabs/profile">Back</IonButton>
 
-                {/*Sign up functionality*/}
-                <IonList className="signupBox">
+                {/*Edit Profile Functionality*/}
+                <IonList className="editProfileBox">
                     <IonTitle className="signupTitle">
                         <h3> Edit Profile </h3>
                     </IonTitle>
 
+                    <IonImg className="imgPFP" src={"assets/profile_pics/pfp" + image + ".png"} alt="Pic"/>
                     <IonButton className="signupButton" onClick={() => changeImage()}>Select PFP</IonButton>
 
                     <IonItem className="input">
@@ -79,15 +77,10 @@ const EditProfile: React.FC = () => {
                         <IonLabel position="floating">Bio</IonLabel>
                         <IonInput value={bio} required onIonChange={e => setBio(e.detail.value!)}/>
                     </IonItem>
+
+                    <IonButton className="saveButton" onClick={() => saveProfile()}>Save Changes</IonButton>
                 </IonList>
-
             </IonContent>
-
-            {/*Return to login functionality*/}
-            <IonList className="loginBox">
-                <IonButton className="loginButton" routerLink="/login">I have an Account</IonButton>
-            </IonList>
-
         </IonPage>
     );
 };
