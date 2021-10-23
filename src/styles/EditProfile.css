@@ -34,3 +34,38 @@
     width: 100px;
     height: 100px;
 }
+
+.selectPic {
+    position: relative;
+    width: 98%;
+    height: 98%;
+}
+
+.selectBox {
+    padding: 5px;
+    background-color: #4c8dff;
+    margin: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+}
+
+.pictureContainer {
+    top: 10%;
+    width:100%;
+    align-items: center;
+    position: absolute;
+    margin-top: 0;
+    height: 100%;
+}
+
+.saveButton2 {
+    width: 80%;
+    height: 8%;
+    transform: translateX(10%) translateY(50%);
+}
