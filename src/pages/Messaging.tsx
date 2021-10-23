@@ -1,7 +1,8 @@
 import {
+    IonAvatar,
     IonButton,
     IonContent, IonFooter,
-    IonHeader, IonInput,
+    IonHeader, IonImg, IonInput,
     IonItem, IonLabel,
     IonList, IonNote,
     IonPage,
@@ -16,13 +17,13 @@ import {openConversation, updateConversation} from "../persistence/FirebaseFunct
 import {FormatMessageTime} from "../utility/DateFormatters";
 import {storage} from "../persistence/LocalStorage";
 
-const Messaging: React.FC<RouteComponentProps> = ({ match }) => {
+const Messaging: React.FC<RouteComponentProps> = ({match}) => {
     const [text, setText] = useState<string>("")
     const [contacts, setContacts] = useState<string[]>([]);
     const [conversation, setConversation] = useState<Conversation>();
     const [currentUser, setCurrentUser] = useState<User>();
 
-    useEffect(()=>{
+    useEffect(() => {
         storage.getUser(setCurrentUser);
     }, [])
 
@@ -36,19 +37,30 @@ const Messaging: React.FC<RouteComponentProps> = ({ match }) => {
     }, [match]);
 
     // Create the list of messages
-    function createList() : ReactElement[] {
+    function createList(): ReactElement[] {
         const list: ReactElement[] = [];
 
         if (conversation !== undefined && conversation.messages !== undefined) {
-            for (let message of conversation.messages) {
+            for (let i = 0; i < conversation.messages.length; i++) {
+                const message = conversation.messages[i];
+                // Name & Timestamp
                 list.push(
-                    <IonItem key={message.time}>
-                        <IonLabel text-wrap>
-                            <b>{message.sender}:</b> {message.message}
-                        </IonLabel>
+                    <IonItem lines="none">
+                        <IonAvatar slot="start">
+                            <IonImg src={"assets/profile_pics/pfp" + message.picture + ".png"} alt="Pic"/>
+                        </IonAvatar>
+
+                        <IonLabel><b>{message.sender}</b></IonLabel>
+
                         <IonNote slot="end">
                             {FormatMessageTime(new Date(message.time))}
                         </IonNote>
+                    </IonItem>
+                )
+                // Message
+                list.push(
+                    <IonItem key={message.time} lines="none">
+                        {message.message}
                     </IonItem>
                 )
             }
@@ -65,11 +77,13 @@ const Messaging: React.FC<RouteComponentProps> = ({ match }) => {
                 }
                 conversation.messages.push({
                     sender: currentUser.name,
+                    picture: currentUser.picture,
                     message: text,
                     time: Date()
                 });
                 setText("");
                 updateConversation(conversation);
+                document.querySelector("ion-content")?.scrollToBottom();
             }
         } else {
             alert("Error sending message, please try again");
@@ -85,9 +99,9 @@ const Messaging: React.FC<RouteComponentProps> = ({ match }) => {
             </IonHeader>
 
             <IonContent fullscreen>
-                <IonList>
-                    {createList()}
-                </IonList>
+                {/*<IonList>*/}
+                {createList()}
+                {/*</IonList>*/}
             </IonContent>
 
             <IonFooter>

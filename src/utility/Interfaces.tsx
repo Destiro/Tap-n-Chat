@@ -12,6 +12,7 @@ export interface User {
 
 export interface Message {
     sender: string;
+    picture: string;
     message: string;
     time: string;
 }
