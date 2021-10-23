@@ -72,16 +72,25 @@ const EditProfile: React.FC = () => {
         }
     }
 
-    // Create the list of contact elements
+    // Create the list of profile picture boxes
     function createList(): ReactElement[] {
         const list: ReactElement[] = [];
 
         for (let i = 1; i < 13; i++) {
-            list.push(
-                <div className="selectBox">
-                    <IonImg className="selectPic" src={"assets/profile_pics/pfp" + i + ".png"} alt="Pic"/>
-                </div>
-            )
+            if(i.toString() === selectedImage){
+                list.push(
+                    <div key={i.toString()} className="selectBox2" onClick={() => setSelectedImage(i.toString())}>
+                        <IonImg className="selectPic" src={"assets/profile_pics/pfp" + i + ".png"} alt="Pic"/>
+                    </div>
+                )
+            }else{
+                list.push(
+                    <div key={i.toString()} className="selectBox" onClick={() => setSelectedImage(i.toString())}>
+                        <IonImg className="selectPic" src={"assets/profile_pics/pfp" + i + ".png"} alt="Pic"/>
+                    </div>
+                )
+            }
+
         }
 
         return list;
@@ -93,9 +102,6 @@ const EditProfile: React.FC = () => {
             <IonPage>
                 <IonHeader>
                     <IonToolbar>
-                        <IonButton className="backButton2" slot="start" onClick={() => setSelectingImage(false)}>
-                            Back
-                        </IonButton>
                         <IonTitle>Selecting Profile Picture</IonTitle>
                     </IonToolbar>
                 </IonHeader>

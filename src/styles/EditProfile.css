@@ -43,6 +43,14 @@
 
 .selectBox {
     padding: 5px;
+    background-color: #9b9b9b;
+    margin: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.selectBox2 {
+    padding: 5px;
     background-color: #4c8dff;
     margin: 5px;
     align-items: center;
