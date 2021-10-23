@@ -26,7 +26,7 @@ const Conversations: React.FC = () => {
                 if (conversation.messages !== undefined) {
                     const lastMessage = conversation.messages[conversation.messages.length - 1];
                     list.push(
-                        <IonItem key={conversation.users.join("")} button
+                        <IonItem key={conversation.users.join("")} button lines="full"
                                  routerLink={"/tabs/conversations/messaging/" + conversation.users.join("-")}>
                             <IonLabel>
                                 <b>{conversation.users.join(", ")}</b>

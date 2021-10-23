@@ -22,6 +22,7 @@ export function FormatDate(date:Date) : string {
 export function FormatMessageTime(date:Date) : string {
     const today = new Date();
     const time = " at "+FormatTime(date);
+
     if (date.getDate() === today.getDate() &&
         date.getMonth() === today.getMonth() &&
         date.getFullYear() === today.getFullYear()) {

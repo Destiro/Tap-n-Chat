@@ -18,6 +18,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Messaging from "./pages/Messaging";
 import EditProfile from "./pages/EditProfile";
+import AddContact from "./pages/AddContact";
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -47,7 +48,8 @@ const App: React.FC = () => (
                 <Route path="/tabs" render={() => (
                     <IonTabs>
                         <IonRouterOutlet>
-                            <Route path="/tabs/contacts" component={Contacts}/>
+                            <Route path="/tabs/contacts" exact component={Contacts}/>
+                            <Route path="/tabs/contacts/addcontact" component={AddContact}/>
                             <Route path="/tabs/conversations" exact component={Conversations}/>
                             <Route path="/tabs/conversations/messaging/:id" component={Messaging}/>
                             <Route path="/tabs/profile" exact component={Profile}/>

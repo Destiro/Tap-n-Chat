@@ -1,19 +1,24 @@
 import {
     IonAvatar,
     IonContent,
-    IonHeader, IonImg,
+    IonFab,
+    IonFabButton,
+    IonHeader,
+    IonIcon,
+    IonImg,
     IonItem,
     IonLabel,
     IonList,
     IonPage,
     IonTitle,
-    IonToolbar
+    IonToolbar, useIonRouter
 } from '@ionic/react';
 import '../styles/Contacts.css';
 import React, {ReactElement, useEffect, useState} from "react";
 import {User} from "../utility/Interfaces";
 import {getUsers} from "../persistence/FirebaseFunctions";
 import {storage} from "../persistence/LocalStorage";
+import {add} from "ionicons/icons";
 
 const Contacts: React.FC = () => {
     const [allUsers, setAllUsers] = useState<User[]>()
@@ -32,7 +37,7 @@ const Contacts: React.FC = () => {
             for (let user of allUsers) {
                 if (currentUser.contacts.includes(user.username))
                     list.push(
-                        <IonItem key={user.username} button
+                        <IonItem key={user.username} button lines="full"
                                  routerLink={"/tabs/conversations/messaging/" + currentUser.username + "-" + user.username}>
                             <IonAvatar slot="start">
                                 <IonImg src={"assets/profile_pics/pfp" + user.picture + ".png"} alt="Pic"/>
@@ -60,6 +65,12 @@ const Contacts: React.FC = () => {
                 <IonList>
                     {createList()}
                 </IonList>
+
+                <IonFab vertical="bottom" horizontal="end" slot="fixed">
+                    <IonFabButton routerLink="/tabs/contacts/addcontact">
+                        <IonIcon icon={add} />
+                    </IonFabButton>
+                </IonFab>
             </IonContent>
         </IonPage>
     );

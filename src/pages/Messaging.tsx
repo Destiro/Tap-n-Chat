@@ -1,10 +1,14 @@
 import {
     IonAvatar,
     IonButton,
-    IonContent, IonFooter,
-    IonHeader, IonImg, IonInput,
-    IonItem, IonLabel,
-    IonList, IonNote,
+    IonContent,
+    IonFooter,
+    IonHeader,
+    IonImg,
+    IonInput,
+    IonItem,
+    IonLabel,
+    IonNote,
     IonPage,
     IonTitle,
     IonToolbar
@@ -104,9 +108,7 @@ const Messaging: React.FC<RouteComponentProps> = ({match}) => {
             </IonHeader>
 
             <IonContent fullscreen>
-                {/*<IonList>*/}
                 {createList()}
-                {/*</IonList>*/}
             </IonContent>
 
             <IonFooter>
