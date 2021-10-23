@@ -1,4 +1,15 @@
-import {IonContent, IonHeader, IonItem, IonLabel, IonList, IonNote, IonPage, IonTitle, IonToolbar} from '@ionic/react';
+import {
+    IonContent,
+    IonHeader,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonNote,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    useIonRouter
+} from '@ionic/react';
 import '../styles/Conversations.css';
 import React, {ReactElement, useEffect, useState} from "react";
 import {getConversations} from "../persistence/FirebaseFunctions";
@@ -9,17 +20,25 @@ import {storage} from "../persistence/LocalStorage";
 const Conversations: React.FC = () => {
     const [currentUser, setCurrentUser] = useState<User>();
     const [conversations, setConversations] = useState<Conversation[]>();
+    const router = useIonRouter();
 
-    useEffect(()=>{
+    useEffect(() => {
+        storage.getUserPromise().then(user => {
+            if (!user || user.length === 0) {
+                router.push("")
+            }
+        }).catch();
+
         storage.getUser(setCurrentUser)
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         if (currentUser) getConversations(currentUser.username, setConversations)
     }, [currentUser])
 
-    function createList() : ReactElement[] {
-        const list : ReactElement[] = []
+
+    function createList(): ReactElement[] {
+        const list: ReactElement[] = []
 
         if (conversations !== undefined) {
             for (let conversation of conversations) {

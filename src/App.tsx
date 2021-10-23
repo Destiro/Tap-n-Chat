@@ -51,7 +51,7 @@ const App: React.FC = () => (
                             <Route path="/tabs/contacts" exact component={Contacts}/>
                             <Route path="/tabs/contacts/addcontact" component={AddContact}/>
                             <Route path="/tabs/conversations" exact component={Conversations}/>
-                            <Route path="/tabs/conversations/messaging/:id" component={Messaging}/>
+                            <Route path="/tabs/conversations/messaging" component={Messaging}/>
                             <Route path="/tabs/profile" exact component={Profile}/>
                             <Route path="/tabs/profile/editprofile" component={EditProfile}/>
 

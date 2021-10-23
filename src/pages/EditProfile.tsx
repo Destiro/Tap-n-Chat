@@ -31,7 +31,13 @@ const EditProfile: React.FC = () => {
     const router = useIonRouter();
 
     //Load pre-existing user details
-    useEffect(() => {
+    useEffect(()=>{
+        storage.getUserPromise().then(user => {
+            if (!user || user.length === 0) {
+                router.push("")
+            }
+        })
+
         storage.getUser(setUser)
     }, []);
 
@@ -53,7 +59,7 @@ const EditProfile: React.FC = () => {
             user.gender = gender;
             user.picture = image;
 
-            storage.storeUser(user);
+            storage.storeUser(user).then();
             storeUser(user);
         }
 

@@ -23,8 +23,15 @@ import {add} from "ionicons/icons";
 const Contacts: React.FC = () => {
     const [allUsers, setAllUsers] = useState<User[]>()
     const [currentUser, setCurrentUser] = useState<User>();
+    const router = useIonRouter();
 
     useEffect(()=>{
+        storage.getUserPromise().then(user => {
+            if (!user || user.length === 0) {
+                router.push("")
+            }
+        })
+
         getUsers(setAllUsers);
         storage.getUser(setCurrentUser);
     }, [])

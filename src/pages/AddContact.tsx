@@ -1,4 +1,4 @@
-import {IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
+import {IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter} from '@ionic/react';
 import '../styles/AddContact.css';
 import React, {useEffect, useState} from "react";
 import QRCode from "react-qr-code";
@@ -10,8 +10,15 @@ import {storeUser} from "../persistence/FirebaseFunctions";
 const AddContact: React.FC = () => {
     const [user, setUser] = useState<User>();
     const [scanning, setScanning] = useState<boolean>(false);
+    const router = useIonRouter();
 
-    useEffect(() => {
+    useEffect(()=>{
+        storage.getUserPromise().then(user => {
+            if (!user || user.length === 0) {
+                router.push("")
+            }
+        })
+
         storage.getUser(setUser)
         // BarcodeScanner.prepare().then();
     }, [])

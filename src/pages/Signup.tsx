@@ -14,6 +14,7 @@ import React, {useEffect, useState} from "react";
 import {FormatDate} from "../utility/DateFormatters";
 import {storeUser, getUsers} from "../persistence/FirebaseFunctions";
 import LoginExists from "../utility/LoginExists";
+import {storage} from "../persistence/LocalStorage";
 
 const Signup: React.FC = () => {
     const [username, setUsername] = useState<string>();
@@ -22,6 +23,16 @@ const Signup: React.FC = () => {
     const [lName, setlName] = useState<string>();
     const [users, setUsers] = useState<any>();
     const router = useIonRouter();
+
+    useEffect(() => {
+        storage.getUserPromise().then(user => {
+            if (user && user.length > 0) {
+                router.push("/tabs")
+            }
+        })
+
+        getUsers(setUsers)
+    }, []);
 
     function createSignup() {
         let date: string = FormatDate(new Date());
@@ -47,12 +58,6 @@ const Signup: React.FC = () => {
             }
         }
     }
-
-    useEffect(() => {
-        getUsers(function (fetched: any[]) {
-            setUsers(fetched);
-        })
-    }, []);
 
     return (
         <div className="contentSignup">

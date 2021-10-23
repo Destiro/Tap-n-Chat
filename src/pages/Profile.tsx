@@ -3,12 +3,11 @@ import {
     IonContent,
     IonHeader,
     IonImg,
-    IonInput,
-    IonItem,
-    IonLabel,
     IonList,
     IonPage,
-    IonTitle, IonToolbar
+    IonTitle,
+    IonToolbar,
+    useIonRouter
 } from '@ionic/react';
 import '../styles/Profile.css';
 import React, {useEffect, useState} from "react";
@@ -17,8 +16,15 @@ import {User} from "../utility/Interfaces";
 
 const Profile: React.FC = () => {
     const [user, setUser] = useState<User>();
+    const router = useIonRouter();
 
     useEffect(() => {
+        storage.getUserPromise().then(user => {
+            if (!user || user.length === 0) {
+                router.push("")
+            }
+        })
+
         storage.getUser(setUser)
     }, []);
 
@@ -29,7 +35,7 @@ const Profile: React.FC = () => {
                     <IonButton className="editProfileButton" slot="start" routerLink="/tabs/profile/editprofile">
                         Edit
                     </IonButton>
-                    <IonButton className="logoutButton" slot="end" routerLink="">
+                    <IonButton className="logoutButton" slot="end" routerLink="" onClick={() => storage.clearUser()}>
                         Logout
                     </IonButton>
                 </IonToolbar>

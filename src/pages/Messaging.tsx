@@ -11,7 +11,7 @@ import {
     IonNote,
     IonPage,
     IonTitle,
-    IonToolbar
+    IonToolbar, useIonRouter
 } from '@ionic/react';
 import '../styles/Messaging.css';
 import React, {ReactElement, useEffect, useState} from "react";
@@ -26,9 +26,17 @@ const Messaging: React.FC<RouteComponentProps> = ({match}) => {
     const [contacts, setContacts] = useState<string[]>([]);
     const [conversation, setConversation] = useState<Conversation>();
     const [currentUser, setCurrentUser] = useState<User>();
+    const router = useIonRouter();
 
-    useEffect(() => {
+    useEffect(()=>{
+        storage.getUserPromise().then(user => {
+            if (!user || user.length === 0) {
+                router.push("")
+            }
+        })
+
         storage.getUser(setCurrentUser);
+        document.querySelector("ion-content")?.scrollToBottom();
     }, [])
 
     useEffect(() => {

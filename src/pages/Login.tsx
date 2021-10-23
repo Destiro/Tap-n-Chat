@@ -21,6 +21,16 @@ const Login: React.FC = () => {
     const [users, setUsers] = useState<User[]>();
     const router = useIonRouter();
 
+    useEffect(() => {
+        storage.getUserPromise().then(user => {
+            if (user && user.length > 0) {
+                router.push("/tabs")
+            }
+        }).catch();
+
+        getUsers(setUsers)
+    }, []);
+
     function ValidateLogin() {
         if (username === undefined || password === undefined) {
             alert("Please enter in your username and password!")
@@ -30,20 +40,14 @@ const Login: React.FC = () => {
             } else if (checkLogin(username, password, users)) {
                 for (let user of users) {
                     if (user.username === username) {
-                        storage.storeUser(user);
+                        storage.storeUser(user).then(()=>router.push("/tabs"));
                     }
                 }
-
-                router.push("/tabs");
             } else {
                 alert("Incorrect username or password!")
             }
         }
     }
-
-    useEffect(() => {
-        getUsers(setUsers)
-    }, []);
 
     return (
         <div className="content">
