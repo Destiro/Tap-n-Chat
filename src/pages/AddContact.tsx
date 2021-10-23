@@ -1,4 +1,4 @@
-import {IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
+import {getPlatforms, IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
 import '../styles/AddContactNFC.css';
 import React, {useEffect, useState} from "react";
 import QRCode from "react-qr-code";
@@ -9,25 +9,49 @@ import {BarcodeScanner} from "@capacitor-community/barcode-scanner";
 const AddContact: React.FC = () => {
     const [user, setUser] = useState<User>();
     const [scanning, setScanning] = useState<boolean>(false);
-    const [result, setResult] = useState<string>("Not Scanned Yet")
 
     useEffect(() => {
         storage.getUser(setUser)
+        BarcodeScanner.prepare();
     }, [])
 
-    const startScan = async () => {
-        await BarcodeScanner.checkPermission({force: true});
-
-        // Hide page in order to display camera
+    const start = async () => {
+        alert("scan pressed");
+        await checkPermission();
         setScanning(true);
+        BarcodeScanner.hideBackground();
 
-        const result = await BarcodeScanner.startScan();
+        const data = await BarcodeScanner.startScan();
 
-        // Show page again
+        //Scanned something
+        if (data.hasContent) {
+            handleSuccess(data);
+        }
+        alert("done")
+    }
+
+    async function checkPermission () {
+        return new Promise(async (resolve, reject) => {
+            const status = await BarcodeScanner.checkPermission({force: true })
+            if(status.granted){
+                resolve(true);
+            }else if(status.denied){
+                alert("No permissions to open camera. Please change in settings.")
+            }else{
+                resolve(false);
+            }
+        });
+    }
+
+    const handleSuccess = (data: any) => {
+        alert(data.content);
+        stopScan();
+    }
+
+    const stopScan = () => {
         setScanning(false);
-
-        setResult(result.content? result.content : "Scan Failed")
-    };
+        BarcodeScanner.stopScan();
+    }
 
     return (
         !scanning ?
@@ -37,15 +61,19 @@ const AddContact: React.FC = () => {
                     <IonTitle>Add Contact</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent fullscreen>
-                { user ?
-                    <QRCode value={user.username}/>
-                    : "Loading QR Code..."
-                }
-                <IonButton onClick={startScan}>Scan</IonButton>
-                Scanned Result: {result}
-            </IonContent>
-        </IonPage> : null
+
+                <IonContent fullscreen>
+                    {user ?
+                        <QRCode value={user.username}/> : "Loading QR Code..."
+                    }
+                    <IonButton onClick={() => start()}>Scan</IonButton>
+                </IonContent>
+
+        </IonPage> :
+            <div>
+                <IonButton onClick={() => stopScan()}>Back</IonButton>
+                <div className="square" />
+            </div>
     );
 };
 
