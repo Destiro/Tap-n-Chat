@@ -36,6 +36,11 @@ const Messaging: React.FC<RouteComponentProps> = ({match}) => {
         }
     }, [match]);
 
+    // Scroll to bottom whenever conversation is updated
+    useEffect(() => {
+        document.querySelector("ion-content")?.scrollToBottom();
+    }, [conversation])
+
     // Create the list of messages
     function createList(): ReactElement[] {
         const list: ReactElement[] = [];
@@ -83,7 +88,7 @@ const Messaging: React.FC<RouteComponentProps> = ({match}) => {
                 });
                 setText("");
                 updateConversation(conversation);
-                document.querySelector("ion-content")?.scrollToBottom();
+                // document.querySelector("ion-content")?.scrollToBottom();
             }
         } else {
             alert("Error sending message, please try again");
