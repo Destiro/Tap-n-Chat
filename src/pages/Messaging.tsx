@@ -49,27 +49,27 @@ const Messaging: React.FC<RouteComponentProps> = ({match}) => {
     function createList(): ReactElement[] {
         const list: ReactElement[] = [];
 
-        if (conversation !== undefined && conversation.messages !== undefined) {
+        if (conversation && conversation.messages && currentUser) {
             for (let i = 0; i < conversation.messages.length; i++) {
                 const message = conversation.messages[i];
                 // Name & Timestamp
                 list.push(
                     <IonItem lines="none">
-                        <IonAvatar slot="start">
+                        <IonLabel slot={currentUser.name === message.sender ? "end" : ""}><b>{message.sender}</b></IonLabel>
+
+                        <IonAvatar slot={currentUser.name === message.sender ? "end" : "start"}>
                             <IonImg src={"assets/profile_pics/pfp" + message.picture + ".png"} alt="Pic"/>
                         </IonAvatar>
 
-                        <IonLabel><b>{message.sender}</b></IonLabel>
-
-                        <IonNote slot="end">
+                        <IonNote slot={currentUser.name === message.sender ? "start" : "end"}>
                             {FormatMessageTime(new Date(message.time))}
                         </IonNote>
                     </IonItem>
                 )
                 // Message
                 list.push(
-                    <IonItem key={message.time} lines="none">
-                        {message.message}
+                    <IonItem key={message.time} lines="full" style={{textAlign: currentUser.name === message.sender ? "right" : "left"}}>
+                        <span style={{width: '100%'}}>{message.message}</span>
                     </IonItem>
                 )
             }
