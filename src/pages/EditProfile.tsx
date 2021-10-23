@@ -16,7 +16,6 @@ import React, {ReactElement, useEffect, useState} from "react";
 import {storage} from "../persistence/LocalStorage";
 import {User} from "../utility/Interfaces";
 import {storeUser} from "../persistence/FirebaseFunctions";
-import SelectProfilePic from "./SelectProfilePic";
 
 const EditProfile: React.FC = () => {
     //Wall of states
