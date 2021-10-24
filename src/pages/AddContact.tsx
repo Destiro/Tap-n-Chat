@@ -86,28 +86,24 @@ const AddContact: React.FC = () => {
 
     return (
         !scanning ?
-            <IonPage>
+            <div className="addContactContent">
                 <IonHeader>
                     <IonToolbar>
                         <IonTitle>Add Contact</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-
-                <IonContent fullscreen>
-                    <IonTitle className="code">Your QR Code</IonTitle>
-                    {user ?
-                        <QRCode value={user.username} className="code"/>
-                        : "Loading QR Code..."
-                    }
-                    <IonButton onClick={() => start()} className="scanButton">
-                        Scan a Code
-                    </IonButton>
-                </IonContent>
-
-            </IonPage>
+                <IonTitle className="code">Your QR Code</IonTitle>
+                {user ?
+                    <QRCode value={user.username} className="code2"/>
+                    : "Loading QR Code..."
+                }
+                <IonButton color="light" onClick={() => start()} className="scanButton">
+                    Scan a Code
+                </IonButton>
+            </div>
             :
             <div>
-                <IonButton onClick={() => stopScan()}>
+                <IonButton className="scanBackButton" onClick={() => stopScan()}>
                     Back
                 </IonButton>
                 <div className="square"/>

@@ -2,14 +2,14 @@
     width: 300px;
     height: 300px;
     background:
-        linear-gradient(to right, red 10px, transparent 10px) 0 0,
-        linear-gradient(to right, red 10px, transparent 10px) 0 100%,
-        linear-gradient(to left, red 10px, transparent 10px) 100% 0,
-        linear-gradient(to left, red 10px, transparent 10px) 100% 100%,
-        linear-gradient(to bottom, red 10px, transparent 10px) 0 0,
-        linear-gradient(to bottom, red 10px, transparent 10px) 100% 0,
-        linear-gradient(to top, red 10px, transparent 10px) 0 100%,
-        linear-gradient(to top, red 10px, transparent 10px) 100% 100%;
+        linear-gradient(to right, dodgerblue 10px, transparent 10px) 0 0,
+        linear-gradient(to right, dodgerblue 10px, transparent 10px) 0 100%,
+        linear-gradient(to left, dodgerblue 10px, transparent 10px) 100% 0,
+        linear-gradient(to left, dodgerblue 10px, transparent 10px) 100% 100%,
+        linear-gradient(to bottom, dodgerblue 10px, transparent 10px) 0 0,
+        linear-gradient(to bottom, dodgerblue 10px, transparent 10px) 100% 0,
+        linear-gradient(to top, dodgerblue 10px, transparent 10px) 0 100%,
+        linear-gradient(to top, dodgerblue 10px, transparent 10px) 100% 100%;
     background-size: 40px 40px;
     background-repeat: no-repeat;
     position: absolute;
@@ -22,12 +22,42 @@
     transform: translateX(-50%);
     text-align: center;
     margin-top: 5%;
-    font-size: 30px;
+    font-size: 36px;
+    color: white;
+}
+
+.code2 {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 230px;
+    height: 230px;
+    text-align: center;
+    margin-top: 10%;
+    /*border: 20px solid white;*/
 }
 
 .scanButton {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 5%;
+    margin-top: 40%;
+    width: 75%;
+    height: 10%;
+    --color: white;
+}
+
+.scanBackButton {
+    left: 2%;
+    top: 2%;
+    position: absolute;
+    width: 25%;
+}
+
+.addContactContent {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-image: url("../assets/screen_backgrounds/settings_background.png");
 }
