@@ -50,7 +50,7 @@ const Profile: React.FC = () => {
                 <div className="lowerBlock">
                     <IonImg className="img" src={"assets/profile_pics/pfp" + user.picture + ".png"} alt="Pic"/>
                     <IonTitle className="profileNames">
-                        <h2>{user.name} {user.surname}</h2>
+                        <h2 className="name">{user.name} {user.surname}</h2>
                     </IonTitle>
                     <div className="infoBox">
                         <h3>Joined: {user.joined}</h3>
