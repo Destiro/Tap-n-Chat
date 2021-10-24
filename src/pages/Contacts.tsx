@@ -21,39 +21,41 @@ import {storage} from "../persistence/LocalStorage";
 import {add} from "ionicons/icons";
 
 const Contacts: React.FC = () => {
-    const [allUsers, setAllUsers] = useState<User[]>()
+    const [contacts, setContacts] = useState<Map<string,User>>()
     const [currentUser, setCurrentUser] = useState<User>();
     const router = useIonRouter();
 
-    useEffect(()=>{
+    useEffect(() => {
         storage.getUserPromise().then(user => {
             if (!user || user.length === 0) {
                 router.push("")
             }
         })
 
-        getUsers(setAllUsers);
+        storage.getContacts(setContacts);
         storage.getUser(setCurrentUser);
     }, [])
 
     // Create the list of contact elements
-    function createList() : ReactElement[] {
+    function createList(): ReactElement[] {
         const list: ReactElement[] = [];
 
-        if (allUsers && currentUser) {
-            for (let user of allUsers) {
-                if (currentUser.contacts.includes(user.username))
+        if (contacts && currentUser) {
+            for (let contactUName of currentUser.contacts) {
+                const contact = contacts.get(contactUName);
+                if (contact) {
                     list.push(
-                        <IonItem key={user.username} button lines="full"
-                                 routerLink={"/tabs/conversations/messaging/" + currentUser.username + "-" + user.username}>
+                        <IonItem key={contact.username} button lines="full"
+                                 routerLink={"/tabs/conversations/messaging/" + currentUser.username + "-" + contact.username}>
                             <IonAvatar slot="start">
-                                <IonImg src={"assets/profile_pics/pfp" + user.picture + ".png"} alt="Pic"/>
+                                <IonImg src={"assets/profile_pics/pfp" + contact.picture + ".png"} alt="Pic"/>
                             </IonAvatar>
                             <IonLabel>
-                                {user.name}
+                                {contact.name}
                             </IonLabel>
                         </IonItem>
                     )
+                }
             }
         }
 
@@ -75,7 +77,7 @@ const Contacts: React.FC = () => {
 
                 <IonFab vertical="bottom" horizontal="end" slot="fixed">
                     <IonFabButton routerLink="/tabs/contacts/addcontact">
-                        <IonIcon icon={add} />
+                        <IonIcon icon={add}/>
                     </IonFabButton>
                 </IonFab>
             </IonContent>

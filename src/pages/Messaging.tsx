@@ -23,10 +23,12 @@ import {storage} from "../persistence/LocalStorage";
 
 const Messaging: React.FC<RouteComponentProps> = ({match}) => {
     const [text, setText] = useState<string>("")
-    const [contacts, setContacts] = useState<string[]>([]);
+    const [users, setUsers] = useState<string[]>([]);
     const [conversation, setConversation] = useState<Conversation>();
     const [currentUser, setCurrentUser] = useState<User>();
+    const [contacts, setContacts] = useState<Map<string,User>>();
     const router = useIonRouter();
+    let onPage : boolean = false;
 
     useEffect(()=>{
         storage.getUserPromise().then(user => {
@@ -36,12 +38,12 @@ const Messaging: React.FC<RouteComponentProps> = ({match}) => {
         })
 
         storage.getUser(setCurrentUser);
-        document.querySelector("ion-content")?.scrollToBottom();
+        storage.getContacts(setContacts);
     }, [])
 
     useEffect(() => {
         const ids = match.url.split("/").reverse()[0].split("-");
-        setContacts(ids);
+        setUsers(ids);
 
         if (ids.length > 0) {
             openConversation(ids, setConversation);
@@ -52,6 +54,22 @@ const Messaging: React.FC<RouteComponentProps> = ({match}) => {
     useEffect(() => {
         document.querySelector("ion-content")?.scrollToBottom();
     }, [conversation])
+
+    function createTitle() : string {
+        const title : string[] = [];
+
+        if (currentUser && contacts && users) {
+            for (let user of users) {
+                // @ts-ignore
+                title.push(contacts.has(user) ? contacts.get(user).name
+                    : (user === currentUser.username ? currentUser.name : user));
+            }
+        } else {
+            title.push("Loading...")
+        }
+
+        return title.sort().join(", ");
+    }
 
     // Create the list of messages
     function createList(): ReactElement[] {
@@ -100,7 +118,7 @@ const Messaging: React.FC<RouteComponentProps> = ({match}) => {
                 });
                 setText("");
                 updateConversation(conversation);
-                // document.querySelector("ion-content")?.scrollToBottom();
+                document.querySelector("ion-content")?.scrollToBottom();
             }
         } else {
             alert("Error sending message, please try again");
@@ -111,7 +129,7 @@ const Messaging: React.FC<RouteComponentProps> = ({match}) => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>{contacts.sort().join(", ")}</IonTitle>
+                    <IonTitle>{createTitle()}</IonTitle>
                 </IonToolbar>
             </IonHeader>
 

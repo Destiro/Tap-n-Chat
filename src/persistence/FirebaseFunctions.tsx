@@ -17,6 +17,25 @@ export function getUsers(callback: (arg0: User[]) => void) {
 }
 
 /**
+ * Getting all users from firestore
+ *
+ * @param usernames
+ * @param callback
+ */
+export function getSpecificUsers(usernames:string[], callback: (arg0: Map<string,User>) => void) {
+    db.firestore().collection("Users").onSnapshot((querySnapshot: any) => {
+        const users: Map<string,User> = new Map<string, User>();
+
+        querySnapshot.forEach((doc: { data: () => any; }) => {
+            if (usernames.includes((doc.data() as User).username)) {
+                users.set((doc.data() as User).username, doc.data())
+            }
+        });
+        callback(users);
+    })
+}
+
+/**
  * Checks if this is a valid user/pass combination, returning a bool
  *
  * @param user
@@ -69,7 +88,6 @@ export function getUser(username: string, callback: (arg0: User) => void) {
         });
     })
 }
-
 
 /**
  * Finds and returns a new or existing conversation

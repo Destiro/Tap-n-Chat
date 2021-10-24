@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 import '../styles/Login.css';
 import React, {useEffect, useState} from "react";
-import {checkLogin, getUsers} from "../persistence/FirebaseFunctions";
+import {checkLogin, getSpecificUsers, getUsers} from "../persistence/FirebaseFunctions";
 import {storage} from "../persistence/LocalStorage";
 import {User} from "../utility/Interfaces";
 
@@ -40,7 +40,13 @@ const Login: React.FC = () => {
             } else if (checkLogin(username, password, users)) {
                 for (let user of users) {
                     if (user.username === username) {
-                        storage.storeUser(user).then(()=>router.push("/tabs"));
+                        storage.storeUser(user).then(() =>
+                            getSpecificUsers(user.contacts, users =>
+                                storage.storeContacts(users).then(() =>
+                                    router.push("/tabs")
+                                )
+                            )
+                        );
                     }
                 }
             } else {
@@ -51,40 +57,40 @@ const Login: React.FC = () => {
 
     return (
         <div className="content">
-                {/*Login functionality*/}
-                <IonList className="loginContainer">
-                    <IonTitle className="loginTitle">
-                        <h1>Tap n Chat</h1>
-                    </IonTitle>
+            {/*Login functionality*/}
+            <IonList className="loginContainer">
+                <IonTitle className="loginTitle">
+                    <h1>Tap n Chat</h1>
+                </IonTitle>
 
-                    <IonItem className="input">
-                        <IonLabel position="floating">Username</IonLabel>
-                        <IonInput
-                            value={username}
-                            onIonChange={e => setUsername(e.detail.value!)}
-                        />
-                    </IonItem>
+                <IonItem className="input">
+                    <IonLabel position="floating">Username</IonLabel>
+                    <IonInput
+                        value={username}
+                        onIonChange={e => setUsername(e.detail.value!)}
+                    />
+                </IonItem>
 
-                    <IonItem className="input">
-                        <IonLabel position="floating">Password</IonLabel>
-                        <IonInput
-                            value={password}
-                            type="password"
-                            onIonChange={e => setPassword(e.detail.value!)}
-                        />
-                    </IonItem>
+                <IonItem className="input">
+                    <IonLabel position="floating">Password</IonLabel>
+                    <IonInput
+                        value={password}
+                        type="password"
+                        onIonChange={e => setPassword(e.detail.value!)}
+                    />
+                </IonItem>
 
-                    <IonButton className="loginButton" onClick={() => ValidateLogin()}>Login</IonButton>
-                </IonList>
+                <IonButton className="loginButton" onClick={() => ValidateLogin()}>Login</IonButton>
+            </IonList>
 
 
-                    {/*Signup Functionality*/}
-                    <div className="signupContainer">
-                        <IonTitle className="signupText">
-                            <h4> Don't have an account? </h4>
-                        </IonTitle>
-                        <IonButton className="signupButton" routerLink="/signup">Signup</IonButton>
-                    </div>
+            {/*Signup Functionality*/}
+            <div className="signupContainer">
+                <IonTitle className="signupText">
+                    <h4> Don't have an account? </h4>
+                </IonTitle>
+                <IonButton className="signupButton" routerLink="/signup">Signup</IonButton>
+            </div>
         </div>
     );
 };

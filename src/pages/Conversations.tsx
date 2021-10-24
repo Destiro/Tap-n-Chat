@@ -18,6 +18,7 @@ import {FormatMessageTime} from "../utility/DateFormatters";
 import {storage} from "../persistence/LocalStorage";
 
 const Conversations: React.FC = () => {
+    const [contacts, setContacts] = useState<Map<string,User>>()
     const [currentUser, setCurrentUser] = useState<User>();
     const [conversations, setConversations] = useState<Conversation[]>();
     const router = useIonRouter();
@@ -29,7 +30,8 @@ const Conversations: React.FC = () => {
             }
         }).catch();
 
-        storage.getUser(setCurrentUser)
+        storage.getUser(setCurrentUser);
+        storage.getContacts(setContacts);
     }, [])
 
     useEffect(() => {
@@ -40,15 +42,23 @@ const Conversations: React.FC = () => {
     function createList(): ReactElement[] {
         const list: ReactElement[] = []
 
-        if (conversations !== undefined) {
+        if (conversations && contacts && currentUser) {
             for (let conversation of conversations) {
-                if (conversation.messages !== undefined) {
+                if (conversation.messages) {
+                    const users : string[] = [];
+                    for (let user of conversation.users) {
+                        // @ts-ignore
+                        users.push(contacts.has(user) ? contacts.get(user).name
+                            : (user === currentUser.username ? currentUser.name : user));
+                    }
+                    users.sort();
+
                     const lastMessage = conversation.messages[conversation.messages.length - 1];
                     list.push(
                         <IonItem key={conversation.users.join("")} button lines="full"
                                  routerLink={"/tabs/conversations/messaging/" + conversation.users.join("-")}>
                             <IonLabel>
-                                <b>{conversation.users.join(", ")}</b>
+                                <b>{users.join(", ")}</b>
                                 <br/>
                                 {lastMessage.message}
                                 <IonNote className="timestamp">
