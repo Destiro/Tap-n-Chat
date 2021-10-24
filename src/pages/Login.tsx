@@ -1,18 +1,16 @@
 import {
     IonButton,
-    IonContent,
     IonInput,
     IonItem,
     IonLabel,
     IonList,
-    IonPage,
     IonTitle,
     useIonRouter
 } from '@ionic/react';
 import '../styles/Login.css';
 import React, {useEffect, useState} from "react";
 import {checkLogin, getSpecificUsers, getUsers} from "../persistence/FirebaseFunctions";
-import {storage} from "../persistence/LocalStorage";
+import {localGetUserPromise, localStoreContacts, localStoreUser} from "../persistence/LocalStorage";
 import {User} from "../utility/Interfaces";
 
 const Login: React.FC = () => {
@@ -22,7 +20,7 @@ const Login: React.FC = () => {
     const router = useIonRouter();
 
     useEffect(() => {
-        storage.getUserPromise().then(user => {
+        localGetUserPromise().then(user => {
             if (user && user.length > 0) {
                 router.push("/tabs")
             }
@@ -40,9 +38,9 @@ const Login: React.FC = () => {
             } else if (checkLogin(username, password, users)) {
                 for (let user of users) {
                     if (user.username === username) {
-                        storage.storeUser(user).then(() =>
+                        localStoreUser(user).then(() =>
                             getSpecificUsers(user.contacts, users =>
-                                storage.storeContacts(users).then(() =>
+                                localStoreContacts(users).then(() =>
                                     router.push("/tabs")
                                 )
                             )

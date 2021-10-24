@@ -11,7 +11,9 @@ import {
     IonNote,
     IonPage,
     IonTitle,
-    IonToolbar, useIonRouter, useIonViewDidEnter
+    IonToolbar,
+    useIonRouter,
+    useIonViewDidEnter
 } from '@ionic/react';
 import '../styles/Messaging.css';
 import React, {ReactElement, useEffect, useState} from "react";
@@ -19,7 +21,7 @@ import {RouteComponentProps} from "react-router";
 import {Conversation, User} from "../utility/Interfaces";
 import {openConversation, updateConversation} from "../persistence/FirebaseFunctions";
 import {FormatMessageTime} from "../utility/DateFormatters";
-import {storage} from "../persistence/LocalStorage";
+import {localGetContacts, localGetUser, localGetUserPromise} from "../persistence/LocalStorage";
 
 const Messaging: React.FC<RouteComponentProps> = ({match}) => {
     const [text, setText] = useState<string>("")
@@ -33,14 +35,14 @@ const Messaging: React.FC<RouteComponentProps> = ({match}) => {
     useIonViewDidEnter(()=>scrollDown = true);
 
     useEffect(()=>{
-        storage.getUserPromise().then(user => {
+        localGetUserPromise().then(user => {
             if (!user || user.length === 0) {
                 router.push("")
             }
         })
 
-        storage.getUser(setCurrentUser);
-        storage.getContacts(setContacts);
+        localGetUser(setCurrentUser);
+        localGetContacts(setContacts);
 
         setInterval( () => {
             if(scrollDown){

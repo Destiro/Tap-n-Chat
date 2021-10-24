@@ -1,31 +1,28 @@
 import {
     IonButton,
-    IonContent,
     IonHeader,
     IonImg,
-    IonList,
-    IonPage,
     IonTitle,
     IonToolbar,
     useIonRouter
 } from '@ionic/react';
 import '../styles/Profile.css';
 import React, {useEffect, useState} from "react";
-import {storage} from "../persistence/LocalStorage";
 import {User} from "../utility/Interfaces";
+import {localClear, localGetUser, localGetUserPromise} from "../persistence/LocalStorage";
 
 const Profile: React.FC = () => {
     const [user, setUser] = useState<User>();
     const router = useIonRouter();
 
     useEffect(() => {
-        storage.getUserPromise().then(user => {
+        localGetUserPromise().then(user => {
             if (!user || user.length === 0) {
                 router.push("")
             }
         })
 
-        storage.getUser(setUser)
+        localGetUser(setUser)
     }, []);
 
     return (
@@ -42,7 +39,7 @@ const Profile: React.FC = () => {
                             Edit
                         </IonButton>
                         <IonButton className="logoutButton" slot="end" routerLink=""
-                                   onClick={() => storage.clear()}>
+                                   onClick={localClear}>
                             Logout
                         </IonButton>
                     </IonToolbar>

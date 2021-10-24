@@ -2,25 +2,32 @@ import {IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonR
 import '../styles/AddContact.css';
 import React, {useEffect, useState} from "react";
 import QRCode from "react-qr-code";
-import {storage} from "../persistence/LocalStorage";
+import {
+    localGetContacts,
+    localGetUser,
+    localGetUserPromise,
+    localStoreContacts,
+    localStoreUser
+} from "../persistence/LocalStorage";
 import {User} from "../utility/Interfaces";
 import {BarcodeScanner} from "@capacitor-community/barcode-scanner";
-import {storeUser} from "../persistence/FirebaseFunctions";
+import {getSpecificUsers, storeUser} from "../persistence/FirebaseFunctions";
 
 const AddContact: React.FC = () => {
+    const [contacts, setContacts] = useState<Map<string,User>>()
     const [user, setUser] = useState<User>();
     const [scanning, setScanning] = useState<boolean>(false);
     const router = useIonRouter();
 
     useEffect(()=>{
-        storage.getUserPromise().then(user => {
+        localGetUserPromise().then(user => {
             if (!user || user.length === 0) {
                 router.push("")
             }
         })
 
-        storage.getUser(setUser)
-        // BarcodeScanner.prepare().then();
+        localGetUser(setUser);
+        localGetContacts(setContacts);
     }, [])
 
     const start = async () => {
@@ -60,7 +67,7 @@ const AddContact: React.FC = () => {
     }
 
     function addContact(contact:string) {
-        if (user) {
+        if (user && contacts) {
             if (contact === user.username) {
                 alert("Cannot add yourself as a contact");
             } else {
@@ -69,6 +76,8 @@ const AddContact: React.FC = () => {
                 } else {
                     user.contacts.push(contact);
                     storeUser(user);
+                    localStoreUser(user).then();
+                    getSpecificUsers(user.contacts, localStoreContacts);
                     alert(contact + " successfully added as a contact");
                 }
             }

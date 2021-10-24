@@ -1,5 +1,4 @@
 import {
-    IonAvatar,
     IonButton,
     IonContent,
     IonHeader, IonImg,
@@ -13,7 +12,7 @@ import {
 } from '@ionic/react';
 import '../styles/EditProfile.css';
 import React, {ReactElement, useEffect, useState} from "react";
-import {storage} from "../persistence/LocalStorage";
+import {localGetUser, localGetUserPromise, localStoreUser} from "../persistence/LocalStorage";
 import {User} from "../utility/Interfaces";
 import {storeUser} from "../persistence/FirebaseFunctions";
 
@@ -32,13 +31,13 @@ const EditProfile: React.FC = () => {
 
     //Load pre-existing user details
     useEffect(()=>{
-        storage.getUserPromise().then(user => {
+        localGetUserPromise().then(user => {
             if (!user || user.length === 0) {
                 router.push("")
             }
         })
 
-        storage.getUser(setUser)
+        localGetUser(setUser)
     }, []);
 
     useEffect(() => {
@@ -59,7 +58,7 @@ const EditProfile: React.FC = () => {
             user.gender = gender;
             user.picture = image;
 
-            storage.storeUser(user).then();
+            localStoreUser(user).then();
             storeUser(user);
         }
 

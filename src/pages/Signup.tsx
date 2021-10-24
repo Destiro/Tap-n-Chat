@@ -14,7 +14,7 @@ import React, {useEffect, useState} from "react";
 import {FormatDate} from "../utility/DateFormatters";
 import {storeUser, getUsers} from "../persistence/FirebaseFunctions";
 import LoginExists from "../utility/LoginExists";
-import {storage} from "../persistence/LocalStorage";
+import {localGetUserPromise} from "../persistence/LocalStorage";
 
 const Signup: React.FC = () => {
     const [username, setUsername] = useState<string>();
@@ -25,7 +25,7 @@ const Signup: React.FC = () => {
     const router = useIonRouter();
 
     useEffect(() => {
-        storage.getUserPromise().then(user => {
+        localGetUserPromise().then(user => {
             if (user && user.length > 0) {
                 router.push("/tabs")
             }

@@ -1,43 +1,42 @@
 import {Storage} from '@ionic/storage';
 import {User} from "../utility/Interfaces";
 
-class LocalStorage {
-    private readonly store: Storage;
-    private readonly userKey: string = 'user';
-    private readonly contactsKey: string = 'contacts';
+const userKey: string = 'user';
+const contactsKey: string = 'contacts';
 
-    constructor() {
-        this.store = new Storage();
-        this.store.create().then();
-    }
-
-    storeUser(user: User) {
-        return this.store.set(this.userKey, JSON.stringify(user));
-    }
-
-    storeContacts(contacts: Map<string, User>) {
-        return this.store.set(this.contactsKey, JSON.stringify(Array.from(contacts.entries())));
-    }
-
-    getUserPromise(): Promise<string> {
-        return this.store.get(this.userKey);
-    }
-
-    getUser(callback: (arg0: User) => void) {
-        this.store.get(this.userKey).then(user =>
-            callback(JSON.parse(user))
-        );
-    }
-
-    getContacts(callback: (arg0: Map<string, User>) => void) {
-        this.store.get(this.contactsKey).then(users => {
-            callback(new Map(JSON.parse(users)))
-        });
-    }
-
-    clear() {
-        this.store.clear().then();
-    }
+async function createStore(): Promise<Storage> {
+    return await new Storage().create();
 }
 
-export const storage = new LocalStorage();
+export function localStoreUser(user: User): Promise<any> {
+    return createStore().then(store => {
+            return store.set(userKey, JSON.stringify(user));
+        }
+    )
+}
+
+export function localStoreContacts(contacts: Map<string, User>) {
+    return createStore().then(store => {
+            return store.set(contactsKey, JSON.stringify(Array.from(contacts.entries())));
+        }
+    )
+}
+
+export function localGetUserPromise(): Promise<string> {
+    return createStore().then(store => {
+            return store.get(userKey);
+        }
+    )
+}
+
+export function localGetUser(callback: (arg0: User) => void) {
+    createStore().then(store => store.get(userKey).then(user => callback(JSON.parse(user))));
+}
+
+export function localGetContacts(callback: (arg0: Map<string, User>) => void) {
+    createStore().then(store => store.get(contactsKey).then(users => callback(new Map(JSON.parse(users)))));
+}
+
+export function localClear() {
+    createStore().then(store => store.clear().then());
+}

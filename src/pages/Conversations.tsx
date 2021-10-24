@@ -15,7 +15,7 @@ import React, {ReactElement, useEffect, useState} from "react";
 import {getConversations} from "../persistence/FirebaseFunctions";
 import {Conversation, User} from "../utility/Interfaces";
 import {FormatMessageTime} from "../utility/DateFormatters";
-import {storage} from "../persistence/LocalStorage";
+import {localGetContacts, localGetUser, localGetUserPromise} from "../persistence/LocalStorage";
 
 const Conversations: React.FC = () => {
     const [contacts, setContacts] = useState<Map<string,User>>()
@@ -24,14 +24,14 @@ const Conversations: React.FC = () => {
     const router = useIonRouter();
 
     useEffect(() => {
-        storage.getUserPromise().then(user => {
+        localGetUserPromise().then(user => {
             if (!user || user.length === 0) {
                 router.push("")
             }
         }).catch();
 
-        storage.getUser(setCurrentUser);
-        storage.getContacts(setContacts);
+        localGetUser(setCurrentUser);
+        localGetContacts(setContacts);
     }, [])
 
     useEffect(() => {

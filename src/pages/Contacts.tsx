@@ -11,13 +11,13 @@ import {
     IonList,
     IonPage,
     IonTitle,
-    IonToolbar, useIonRouter
+    IonToolbar,
+    useIonRouter
 } from '@ionic/react';
 import '../styles/Contacts.css';
 import React, {ReactElement, useEffect, useState} from "react";
 import {User} from "../utility/Interfaces";
-import {getUsers} from "../persistence/FirebaseFunctions";
-import {storage} from "../persistence/LocalStorage";
+import {localGetContacts, localGetUser, localGetUserPromise} from "../persistence/LocalStorage";
 import {add} from "ionicons/icons";
 
 const Contacts: React.FC = () => {
@@ -26,15 +26,16 @@ const Contacts: React.FC = () => {
     const router = useIonRouter();
 
     useEffect(() => {
-        storage.getUserPromise().then(user => {
+        localGetUserPromise().then(user => {
             if (!user || user.length === 0) {
                 router.push("")
             }
         })
 
-        storage.getContacts(setContacts);
-        storage.getUser(setCurrentUser);
+        localGetContacts(setContacts);
+        localGetUser(setCurrentUser);
     }, [])
+
 
     // Create the list of contact elements
     function createList(): ReactElement[] {
