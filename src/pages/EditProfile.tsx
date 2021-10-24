@@ -121,7 +121,7 @@ const EditProfile: React.FC = () => {
             </IonPage>
             :
             // Edit profile page
-            <IonPage>
+            <div className="editProfileContent">
                 <IonHeader>
                     <IonToolbar className="topButtons">
                         <IonButton className="backButton" slot="start" routerLink="/tabs/profile">
@@ -132,38 +132,36 @@ const EditProfile: React.FC = () => {
                         </IonButton>
                     </IonToolbar>
                 </IonHeader>
-                <IonContent fullscreen>
                     {/*Edit Profile Functionality*/}
                     <IonList className="editProfileBox">
                         <IonTitle className="signupTitle">
-                            <h3> Edit Profile </h3>
+                            <h3 className="editText"> Edit Profile </h3>
                         </IonTitle>
 
                         <IonImg className="imgPFP" src={"assets/profile_pics/pfp" + image + ".png"} alt="Pic"/>
                         <IonButton className="signupButton" onClick={() => changeImage()}>Select PFP</IonButton>
 
-                        <IonItem className="input">
+                        <IonItem className="input2">
                             <IonLabel position="floating">First Name</IonLabel>
                             <IonInput value={fName} required onIonChange={e => setfName(e.detail.value!)}/>
                         </IonItem>
 
-                        <IonItem className="input">
+                        <IonItem className="input2">
                             <IonLabel position="floating">Last Name</IonLabel>
                             <IonInput value={lName} required onIonChange={e => setlName(e.detail.value!)}/>
                         </IonItem>
 
-                        <IonItem className="input">
+                        <IonItem className="input2">
                             <IonLabel position="floating">Gender</IonLabel>
                             <IonInput value={gender} required onIonChange={e => setGender(e.detail.value!)}/>
                         </IonItem>
 
-                        <IonItem className="input">
+                        <IonItem className="input2">
                             <IonLabel position="floating">Bio</IonLabel>
                             <IonTextarea value={bio} required onIonChange={e => setBio(e.detail.value!)}/>
                         </IonItem>
                     </IonList>
-                </IonContent>
-            </IonPage>
+            </div>
     );
 };
 

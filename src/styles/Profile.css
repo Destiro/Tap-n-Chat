@@ -6,6 +6,11 @@
     background-image: url("../assets/screen_backgrounds/profile_background2.png");
 }
 
+.editText {
+    font-size: 30px;
+    color: black;
+}
+
 .lowerBlock {
     position: relative;
     width: 100%;
