@@ -6,7 +6,7 @@ import {
     IonLabel, IonList,
     IonPage,
     IonTitle,
-    useIonRouter
+    useIonRouter, useIonToast
 } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import '../styles/Signup.css';
@@ -22,6 +22,8 @@ const Signup: React.FC = () => {
     const [fName, setfName] = useState<string>();
     const [lName, setlName] = useState<string>();
     const [users, setUsers] = useState<any>();
+    const [savedSuccess, setSavedSuccess] = useState<boolean>(true);
+    const [present, dismiss] = useIonToast();
     const router = useIonRouter();
 
     useEffect(() => {
@@ -38,7 +40,7 @@ const Signup: React.FC = () => {
         let date: string = FormatDate(new Date());
         if (username === undefined || password === undefined ||
             fName === undefined || lName === undefined) {
-            alert("Please fill in all fields!")
+            present("Please fill in all fields!", 3000)
         } else {
             if (!LoginExists(username, users)) {
                 storeUser({
@@ -51,10 +53,18 @@ const Signup: React.FC = () => {
                     bio: "No Bio Provided",
                     picture: "1",
                     contacts: []
+                }, function(didSave: boolean) {
+                    setSavedSuccess(didSave);
                 });
+
+                if(savedSuccess){
+                    present("User Saved Successfully!", 3000)
+                }else{
+                    present("Error Saving User.", 3000);
+                }
                 router.push("/login");
             } else {
-                alert("Username already exists!")
+                present("Username already exists!", 3000)
             }
         }
     }

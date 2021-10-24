@@ -8,7 +8,9 @@ import {
     IonList,
     IonPage, IonTextarea,
     IonTitle,
-    IonToolbar, useIonRouter
+    IonToolbar, useIonRouter,
+    useIonToast,
+    IonToast
 } from '@ionic/react';
 import '../styles/EditProfile.css';
 import React, {ReactElement, useEffect, useState} from "react";
@@ -26,6 +28,8 @@ const EditProfile: React.FC = () => {
     const [image, setImage] = useState<string>("1");
     const [selectingImage, setSelectingImage] = useState<boolean>(false);
     const [selectedImage, setSelectedImage] = useState<string>("1");
+    const [savedSuccess, setSavedSuccess] = useState<boolean>(true);
+    const [present, dismiss] = useIonToast();
 
     const router = useIonRouter();
 
@@ -59,7 +63,15 @@ const EditProfile: React.FC = () => {
             user.picture = image;
 
             localStoreUser(user).then();
-            storeUser(user);
+            storeUser(user, function(didSave: boolean) {
+                setSavedSuccess(didSave);
+            });
+
+            if(savedSuccess){
+                present("User Saved Successfully!", 3000)
+            }else{
+                present("Error Saving User.", 3000);
+            }
         }
 
         router.goBack();

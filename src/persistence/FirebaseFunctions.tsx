@@ -1,5 +1,10 @@
 import {db} from "../config/FirebaseConfig";
 import {Conversation, User} from "../utility/Interfaces";
+import {useIonToast} from "@ionic/react";
+
+/**
+ * Alerts the user if firebase function performed successfully or not
+ */
 
 /**
  * Getting all users from firestore
@@ -63,12 +68,11 @@ export function checkLogin(user: string, pass: string, users: User[]) : boolean 
  * @param user
  * @constructor
  */
-export function storeUser(user:User) {
+export function storeUser(user:User, callback:any) {
     db.firestore().collection("Users").doc(user.username).set(user).then(() =>
-        alert("User saved successfully!")
+        callback(true)
     ).catch(error => {
-        alert("Error saving user: " + error);
-        console.error("Error saving user: ", error);
+        callback(false);
     });
 }
 

@@ -1,4 +1,14 @@
-import {IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonRouter} from '@ionic/react';
+import {
+    IonButton,
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonTitle,
+    IonToast,
+    IonToolbar,
+    useIonRouter,
+    useIonToast
+} from '@ionic/react';
 import '../styles/AddContact.css';
 import React, {useEffect, useState} from "react";
 import QRCode from "react-qr-code";
@@ -17,6 +27,8 @@ const AddContact: React.FC = () => {
     const [contacts, setContacts] = useState<Map<string,User>>()
     const [user, setUser] = useState<User>();
     const [scanning, setScanning] = useState<boolean>(false);
+    const [savedSuccess, setSavedSuccess] = useState<boolean>(true);
+    const [present, dismiss] = useIonToast();
     const router = useIonRouter();
 
     useEffect(()=>{
@@ -49,7 +61,7 @@ const AddContact: React.FC = () => {
             if (status.granted) {
                 resolve(true);
             } else if (status.denied) {
-                alert("No permissions to open camera. Please change in settings.")
+                present("No Perms to open camera, Please change in settings.", 3000);
             } else {
                 resolve(false);
             }
@@ -69,16 +81,25 @@ const AddContact: React.FC = () => {
     function addContact(contact:string) {
         if (user && contacts) {
             if (contact === user.username) {
-                alert("Cannot add yourself as a contact");
+                present("Cannot add yourself as a contact!", 3000);
             } else {
                 if (user.contacts.includes(contact)) {
-                    alert("Contact already added");
+                    present("Contact Already Added!", 3000);
                 } else {
                     user.contacts.push(contact);
-                    storeUser(user);
+                    storeUser(user, function(didSave: boolean) {
+                        setSavedSuccess(didSave);
+                    });
+
+                    if(savedSuccess){
+                        present("User Saved Successfully!", 3000)
+                    }else{
+                        present("Error Saving User.", 3000);
+                    }
+
                     localStoreUser(user).then();
                     getSpecificUsers(user.contacts, localStoreContacts);
-                    alert(contact + " successfully added as a contact");
+                    present("Successfully added as a contact!", 3000);
                 }
             }
         }

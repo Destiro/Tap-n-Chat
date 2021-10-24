@@ -5,7 +5,7 @@ import {
     IonLabel,
     IonList,
     IonTitle,
-    useIonRouter
+    useIonRouter, useIonToast
 } from '@ionic/react';
 import '../styles/Login.css';
 import React, {useEffect, useState} from "react";
@@ -17,6 +17,7 @@ const Login: React.FC = () => {
     const [username, setUsername] = useState<string>();
     const [password, setPassword] = useState<string>();
     const [users, setUsers] = useState<User[]>();
+    const [present, dismiss] = useIonToast();
     const router = useIonRouter();
 
     useEffect(() => {
@@ -31,10 +32,10 @@ const Login: React.FC = () => {
 
     function ValidateLogin() {
         if (username === undefined || password === undefined) {
-            alert("Please enter in your username and password!")
+            present("Please enter in a username and password!", 3000);
         } else {
             if (users === undefined) {
-                alert("Connection error, please try again");
+                present("Connection error! Please try again.", 3000);
             } else if (checkLogin(username, password, users)) {
                 for (let user of users) {
                     if (user.username === username) {
@@ -48,7 +49,7 @@ const Login: React.FC = () => {
                     }
                 }
             } else {
-                alert("Incorrect username or password!")
+                present("Incorrect Username or Password!", 3000);
             }
         }
     }
