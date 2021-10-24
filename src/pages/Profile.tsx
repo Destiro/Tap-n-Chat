@@ -42,7 +42,7 @@ const Profile: React.FC = () => {
                             Edit
                         </IonButton>
                         <IonButton className="logoutButton" slot="end" routerLink=""
-                                   onClick={() => storage.clearUser()}>
+                                   onClick={() => storage.clear()}>
                             Logout
                         </IonButton>
                     </IonToolbar>
