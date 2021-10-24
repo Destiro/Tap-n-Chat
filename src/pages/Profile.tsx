@@ -29,46 +29,38 @@ const Profile: React.FC = () => {
     }, []);
 
     return (
-        <IonPage>
-            <IonHeader>
-                <IonToolbar className="topButtons">
-                    <IonButton className="editProfileButton" slot="start" routerLink="/tabs/profile/editprofile">
-                        Edit
-                    </IonButton>
-                    <IonButton className="logoutButton" slot="end" routerLink="" onClick={() => storage.clear()}>
-                        Logout
-                    </IonButton>
-                </IonToolbar>
-            </IonHeader>
-            <IonContent fullscreen>
-                <IonList className="profileContainer">
-                    {
-                        // Display loading message if user hasn't loaded
-                        !user ?
-                            <IonTitle className="profileNames">
-                                <h1> Loading User...</h1>
-                            </IonTitle>
-                            :
-                            <>
-                                <div className="upperBlock" />
-                                <IonImg className="img" src={"assets/profile_pics/pfp" + user.picture + ".png"} alt="Pic"/>
-                                <div className="lowerBlock">
-                                    <IonTitle className="profileNames">
-                                        <h2>{user.name} {user.surname}</h2>
-                                    </IonTitle>
-                                    <h3>Joined: {user.joined}</h3>
-                                    <h3>Gender: {user.gender}</h3>
-                                    <h3>Bio:</h3>
-                                    <div className="bioBox">
-                                        <h4>{user.bio}</h4>
-                                    </div>
-                                    <div className="space" />
-                                </div>
-                            </>
-                    }
-                </IonList>
-            </IonContent>
-        </IonPage>
+        // Display loading message if user hasn't loaded
+        !user ?
+            <IonTitle className="profileNames">
+                <h1> Loading User...</h1>
+            </IonTitle>
+            :
+            <div className="contentProfile">
+                <IonHeader>
+                    <IonToolbar className="topButtons">
+                        <IonButton className="editProfileButton" slot="start" routerLink="/tabs/profile/editprofile">
+                            Edit
+                        </IonButton>
+                        <IonButton className="logoutButton" slot="end" routerLink=""
+                                   onClick={() => storage.clearUser()}>
+                            Logout
+                        </IonButton>
+                    </IonToolbar>
+                </IonHeader>
+                <div className="lowerBlock">
+                    <IonImg className="img" src={"assets/profile_pics/pfp" + user.picture + ".png"} alt="Pic"/>
+                    <IonTitle className="profileNames">
+                        <h2>{user.name} {user.surname}</h2>
+                    </IonTitle>
+                    <div className="infoBox">
+                        <h3>Joined: {user.joined}</h3>
+                        <h3>Gender: {user.gender}</h3>
+                    </div>
+                    <div className="bioBox">
+                        <h5>{user.bio}</h5>
+                    </div>
+                </div>
+            </div>
     );
 };
 
