@@ -6,7 +6,7 @@ Mobile Messaging app that allows the user to login/signup and message other user
 | | | |
 ------------ | ------------- | ------------- | 
 **Name** | Connor de Bruyn | Michaiah Thoms
-**Username** | debruconn | thomsmich
+**Username** | Destiro | Mic01
 
 ### Demo Video:
 https://youtu.be/XzhZo2Kph-s
