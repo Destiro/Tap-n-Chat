@@ -1,19 +1,21 @@
 # Tap-n-Chat
+Mobile Messaging app that allows the user to login/signup and message other users. The app is able to generate and scan QR codes to add users as friends as well as set a public profile and edit it.
 
-#### Authors: Michaiah Thoms and Connor de Bruyn
 
-SWEN325 Assignment 3:
+### Authors: 
+| | | |
+------------ | ------------- | ------------- | 
+**Name** | Connor de Bruyn | Michaiah Thoms
+**Username** | debruconn | thomsmich
 
-Messaging app with QR code contact sharing, made with React Ionic.
+### Demo Video:
+https://youtu.be/XzhZo2Kph-s
 
-###How to run:
+### How to run:
 
--Install NodeJS & React Ionic
-
--run: npm install
-
--to run in browser: ionic serve
-
--to tun on android/emulator: ionic cap run android
-
-(may also need to install appropriate android sdk e.g. with Android Studio)
+- Install NodeJS & React Ionic
+- Clone the project using "git clone https://github.com/Destiro/Tap-n-Chat.git"
+- Run: "npm install"
+- To run in browser: "ionic serve"
+- To tun on android/emulator: "ionic cap run android -l --external"
+(Will also need to install appropriate android sdk with android studio if wanting to run via emulator or on an android device)
